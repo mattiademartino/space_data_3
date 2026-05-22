@@ -2,6 +2,8 @@
 Homework 2: Denoising 2D Lunar Images with a U-Net CNN
 """
 
+from pathlib import Path
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -17,6 +19,8 @@ np.random.seed(SEED)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {DEVICE}")
+
+BASE_DIR = Path(__file__).resolve().parent
 
 # ─── Dataset ──────────────────────────────────────────────────────────────────
 class LunarDataset(Dataset):
@@ -99,8 +103,8 @@ class UNet(nn.Module):
 
 
 # ─── Load data & split ────────────────────────────────────────────────────────
-noisy_np = np.load("noisy_images_small_1k (1).npy")
-clean_np = np.load("clean_images_small_1k (1).npy")
+noisy_np = np.load(BASE_DIR / "noisy_images_small_1k (1).npy")
+clean_np = np.load(BASE_DIR / "clean_images_small_1k (1).npy")
 
 dataset = LunarDataset(noisy_np, clean_np)
 
