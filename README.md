@@ -2,7 +2,7 @@
 # Space Data 3 Project - IMAGE DENOISING
 
 ### Setup
-Once on the Euler cluster, run the modified startup script to setup the environment (on initial setup also run ```chmod +x startup.sh```):
+Once on the Euler cluster, run the modified startup script to setup the environment <br>  (on initial setup also run ```chmod +x startup.sh```):
 ```
 source ./startup.sh 
 ```
