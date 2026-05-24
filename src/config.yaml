@@ -150,6 +150,46 @@ experiments:
       scheduler: cosine
       loss: mse
 
+  # ── Attention U-Net ───────────────────────────────────────────────────────
+  - name: unet_attention
+    model:
+      architecture: unet_attention  # attention gates on all skip connections
+      features: [32, 64, 128]
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adam
+      lr: 1.0e-3
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: mse
+
+  - name: unet_attention_large
+    model:
+      architecture: unet_attention
+      features: [64, 128, 256]
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: mse
+
+  - name: res_unet_attention
+    model:
+      architecture: res_unet_attention  # residual blocks + attention gates
+      features: [32, 64, 128]
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adam
+      lr: 1.0e-3
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: mse
+
   # ── ResNet flat denoiser ───────────────────────────────────────────────────
   - name: resnet_8blocks
     model:

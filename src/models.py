@@ -164,6 +164,122 @@ class Autoencoder(nn.Module):
         return torch.sigmoid(self.out_conv(d1))
 
 
+class AttentionGate(nn.Module):
+    """Soft spatial attention gate for skip connections (Oktay et al. 2018).
+
+    Computes per-pixel attention coefficients alpha ∈ [0,1] by combining
+    the gating signal g (from the decoder path) with the skip feature x
+    (from the encoder path).  The returned tensor is x * alpha, suppressing
+    irrelevant background regions before concatenation in the decoder.
+    """
+    def __init__(self, f_g: int, f_l: int, f_int: int):
+        super().__init__()
+        self.W_g = nn.Sequential(
+            nn.Conv2d(f_g, f_int, 1, bias=True),
+            nn.BatchNorm2d(f_int),
+        )
+        self.W_x = nn.Sequential(
+            nn.Conv2d(f_l, f_int, 1, bias=True),
+            nn.BatchNorm2d(f_int),
+        )
+        self.psi = nn.Sequential(
+            nn.Conv2d(f_int, 1, 1, bias=True),
+            nn.BatchNorm2d(1),
+            nn.Sigmoid(),
+        )
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, g, x):
+        alpha = self.psi(self.relu(self.W_g(g) + self.W_x(x)))
+        return x * alpha
+
+
+class UNetAttention(nn.Module):
+    """3-stage U-Net with attention gates on all skip connections."""
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+        super().__init__()
+        f = features
+        self.pool = nn.MaxPool2d(2)
+        self.enc1 = DoubleConv(1, f[0], dropout)
+        self.enc2 = DoubleConv(f[0], f[1], dropout)
+        self.enc3 = DoubleConv(f[1], f[2], dropout)
+        self.bottleneck = DoubleConv(f[2], f[2] * 2, dropout)
+
+        self.up3 = nn.ConvTranspose2d(f[2] * 2, f[2], 2, stride=2)
+        self.att3 = AttentionGate(f_g=f[2], f_l=f[2], f_int=max(f[2] // 2, 1))
+        self.dec3 = DoubleConv(f[2] * 2, f[2], dropout)
+
+        self.up2 = nn.ConvTranspose2d(f[2], f[1], 2, stride=2)
+        self.att2 = AttentionGate(f_g=f[1], f_l=f[1], f_int=max(f[1] // 2, 1))
+        self.dec2 = DoubleConv(f[1] * 2, f[1], dropout)
+
+        self.up1 = nn.ConvTranspose2d(f[1], f[0], 2, stride=2)
+        self.att1 = AttentionGate(f_g=f[0], f_l=f[0], f_int=max(f[0] // 2, 1))
+        self.dec1 = DoubleConv(f[0] * 2, f[0], dropout)
+
+        self.out_conv = nn.Conv2d(f[0], 1, 1)
+
+    def forward(self, x):
+        e1 = self.enc1(x)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        b = self.bottleneck(self.pool(e3))
+
+        g3 = self.up3(b)
+        d3 = self.dec3(torch.cat([g3, self.att3(g3, e3)], dim=1))
+
+        g2 = self.up2(d3)
+        d2 = self.dec2(torch.cat([g2, self.att2(g2, e2)], dim=1))
+
+        g1 = self.up1(d2)
+        d1 = self.dec1(torch.cat([g1, self.att1(g1, e1)], dim=1))
+
+        return torch.sigmoid(self.out_conv(d1))
+
+
+class ResUNetAttention(nn.Module):
+    """3-stage U-Net with residual double-conv blocks AND attention gates."""
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+        super().__init__()
+        f = features
+        self.pool = nn.MaxPool2d(2)
+        self.enc1 = ResDoubleConv(1, f[0], dropout)
+        self.enc2 = ResDoubleConv(f[0], f[1], dropout)
+        self.enc3 = ResDoubleConv(f[1], f[2], dropout)
+        self.bottleneck = ResDoubleConv(f[2], f[2] * 2, dropout)
+
+        self.up3 = nn.ConvTranspose2d(f[2] * 2, f[2], 2, stride=2)
+        self.att3 = AttentionGate(f_g=f[2], f_l=f[2], f_int=max(f[2] // 2, 1))
+        self.dec3 = ResDoubleConv(f[2] * 2, f[2], dropout)
+
+        self.up2 = nn.ConvTranspose2d(f[2], f[1], 2, stride=2)
+        self.att2 = AttentionGate(f_g=f[1], f_l=f[1], f_int=max(f[1] // 2, 1))
+        self.dec2 = ResDoubleConv(f[1] * 2, f[1], dropout)
+
+        self.up1 = nn.ConvTranspose2d(f[1], f[0], 2, stride=2)
+        self.att1 = AttentionGate(f_g=f[0], f_l=f[0], f_int=max(f[0] // 2, 1))
+        self.dec1 = ResDoubleConv(f[0] * 2, f[0], dropout)
+
+        self.out_conv = nn.Conv2d(f[0], 1, 1)
+
+    def forward(self, x):
+        e1 = self.enc1(x)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        b = self.bottleneck(self.pool(e3))
+
+        g3 = self.up3(b)
+        d3 = self.dec3(torch.cat([g3, self.att3(g3, e3)], dim=1))
+
+        g2 = self.up2(d3)
+        d2 = self.dec2(torch.cat([g2, self.att2(g2, e2)], dim=1))
+
+        g1 = self.up1(d2)
+        d1 = self.dec1(torch.cat([g1, self.att1(g1, e1)], dim=1))
+
+        return torch.sigmoid(self.out_conv(d1))
+
+
 class ResBlock(nn.Module):
     """Single residual block: Conv-BN-ReLU-Conv-BN + identity skip."""
     def __init__(self, channels: int, dropout: float = 0.0):
@@ -215,6 +331,10 @@ def build_model(model_cfg: dict) -> nn.Module:
         return UNetDeep(features, dropout)
     elif arch == "res_unet":
         return ResUNet(features, dropout)
+    elif arch == "unet_attention":
+        return UNetAttention(features, dropout)
+    elif arch == "res_unet_attention":
+        return ResUNetAttention(features, dropout)
     elif arch == "autoencoder":
         return Autoencoder(features, dropout)
     elif arch == "resnet":
