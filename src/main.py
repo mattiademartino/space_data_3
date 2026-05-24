@@ -16,12 +16,13 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
+from torch.utils.data import DataLoader
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from dataset import load_data, make_loaders  # noqa: E402
+from dataset import load_data, load_test, make_loaders  # noqa: E402
 from models import build_model               # noqa: E402
 from trainer import fit                      # noqa: E402
 from metrics import compute_metrics          # noqa: E402
@@ -58,6 +59,35 @@ def _save_comparison(model, train_ds, val_ds, device, out_dir: Path, run_name: s
 
     _triplet(train_ds, 0, "Training Sample", "comparison_train.png")
     _triplet(val_ds, 0, "Validation Sample", "comparison_val.png")
+
+
+def _save_test_predictions(model, test_ds, device, out_dir: Path):
+    """Run inference on the blind test set and save predictions as .npy + a sample grid."""
+    loader = DataLoader(test_ds, batch_size=32, shuffle=False, num_workers=2, pin_memory=True)
+    model.eval()
+    preds = []
+    with torch.no_grad():
+        for batch in loader:
+            preds.append(model(batch.to(device)).squeeze(1).cpu().numpy())
+    preds = np.concatenate(preds, axis=0)          # (N, H, W) float32 in [0,1]
+    np.save(out_dir / "test_predictions.npy", preds)
+
+    # Visual grid: first 8 noisy vs denoised
+    n_show = min(8, len(test_ds))
+    fig, axes = plt.subplots(2, n_show, figsize=(n_show * 2, 4))
+    for i in range(n_show):
+        axes[0, i].imshow(test_ds[i].squeeze().numpy(), cmap="gray", vmin=0, vmax=1)
+        axes[0, i].axis("off")
+        axes[1, i].imshow(preds[i], cmap="gray", vmin=0, vmax=1)
+        axes[1, i].axis("off")
+    axes[0, 0].set_ylabel("Noisy", fontsize=9)
+    axes[1, 0].set_ylabel("Denoised", fontsize=9)
+    fig.suptitle("Blind test predictions (first 8)")
+    plt.tight_layout()
+    plt.savefig(out_dir / "test_predictions_grid.png", dpi=150)
+    plt.close()
+    print(f"  -> Saved test predictions: {out_dir / 'test_predictions.npy'} "
+          f"({len(preds)} images)")
 
 
 def _print_and_save_summary(results: list, output_dir: Path):
@@ -114,7 +144,9 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     train_ds, val_ds = load_data(cfg["data"], ROOT, seed)
-    print(f"Train: {len(train_ds)}  Val: {len(val_ds)}")
+    test_ds = load_test(cfg["data"], ROOT)
+    print(f"Train: {len(train_ds)}  Val: {len(val_ds)}"
+          + (f"  Test (blind): {len(test_ds)}" if test_ds else ""))
 
     experiments = cfg["experiments"]
     if args.run:
@@ -145,6 +177,9 @@ def main():
         print(f"  -> Val MSE: {metrics['mse']:.6f}  PSNR: {metrics['psnr']:.2f} dB")
 
         _save_comparison(model, train_ds, val_ds, device, exp_dir, name)
+
+        if test_ds is not None:
+            _save_test_predictions(model, test_ds, device, exp_dir)
 
         result = {
             "name": name,
