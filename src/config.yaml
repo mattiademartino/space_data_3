@@ -3,6 +3,8 @@ seed: 42
 data:
   noisy_path: "homework_2/noisy_images_small_1k (1).npy"
   clean_path: "homework_2/clean_images_small_1k (1).npy"
+  # noisy_path: "data/noisy_train_19k_harder.npy"
+  # clean_path: "data/clean_train_19k_harder.npy"
   val_split: 0.05
 
 output_dir: "results"

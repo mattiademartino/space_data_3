@@ -4,7 +4,7 @@
 ### Setup
 Once on the Euler cluster, run the modified startup script to setup the environment <br>  (on initial setup also run ```chmod +x startup.sh```):
 ```
-source ./startup.sh 
+source startup.sh 
 ```
 
 
@@ -15,12 +15,19 @@ source ./startup.sh
 
 
 ### Implementation Ideas
-
+Architectures
 * U-Net 
 
 * U-Net with skip connections
 
 * U-Net with attention layer
+
+<br>
+Loss functions
+NVIDIA proposed loss for image reconstruction: https://research.nvidia.com/sites/default/files/pubs/2017-03_Loss-Functions-for/NN_ImgProc.pdf
+
+
+
 
 ### To-Do's
 * Split Train data in Train and Test split

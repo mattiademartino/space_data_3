@@ -1,4 +1,5 @@
 numpy
-matplotlib
 torch
+matplotlib
 pyyaml
+pytorch_msssim
