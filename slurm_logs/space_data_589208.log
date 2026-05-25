@@ -1,0 +1,12 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: unet_small
+============================================================
+Parameters: 482,449
+  [unet_small]   1/60  train 0.005239  val 0.004472
+  [unet_small]  10/60  train 0.003530  val 0.003575
+  [unet_small]  20/60  train 0.003434  val 0.003338
+  [unet_small]  30/60  train 0.003346  val 0.004239
+  [unet_small]  40/60  train 0.003229  val 0.004110
