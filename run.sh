@@ -1,8 +1,14 @@
 #!/bin/bash
+#SBATCH --job-name=resnet_flat_denoiser
 #SBATCH -n 10
 #SBATCH --mem-per-cpu=8g
-#SBATCH --gpus=1 
+#SBATCH --gpus=1
 #SBATCH --gres=gpumem:20g
-#SBATCH --time=01:10:00
+#SBATCH --time=02:59:00
+#SBATCH --output=slurm_logs/space_data_%j.log
 
-python src/main.py 
+# 2. Activate your virtual environment
+source /cluster/home/mriestere/space_data_3/venv/bin/activate
+
+# 3. Run your code
+python src/main.py

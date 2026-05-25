@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
+import nvidia_loss 
 
 
 def build_optimizer(model: nn.Module, cfg: dict) -> optim.Optimizer:
@@ -43,6 +44,8 @@ def build_criterion(cfg: dict) -> nn.Module:
         return nn.L1Loss()
     elif loss == "combined":
         _mse, _l1 = nn.MSELoss(), nn.L1Loss()
+    elif loss == "nvidia_loss":
+        return nvidia_loss.MixLoss()
 
         class _Combined(nn.Module):
             def forward(self, pred, target):

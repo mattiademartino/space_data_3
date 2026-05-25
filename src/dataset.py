@@ -28,7 +28,7 @@ def load_data(data_cfg: dict, project_root: Path, seed: int = 42):
     return train_ds, val_ds
 
 
-def make_loaders(train_ds, val_ds, batch_size: int, num_workers: int = 2):
+def make_loaders(train_ds, val_ds, batch_size: int, num_workers: int = 4):
     train_loader = DataLoader(
         train_ds, batch_size=batch_size, shuffle=True,
         num_workers=num_workers, pin_memory=True,

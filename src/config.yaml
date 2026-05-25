@@ -1,10 +1,10 @@
 seed: 42
 
 data:
-  noisy_path: "homework_2/noisy_images_small_1k (1).npy"
-  clean_path: "homework_2/clean_images_small_1k (1).npy"
-  # noisy_path: "data/noisy_train_19k_harder.npy"
-  # clean_path: "data/clean_train_19k_harder.npy"
+  # noisy_path: "homework_2/noisy_images_small_1k (1).npy"
+  # clean_path: "homework_2/clean_images_small_1k (1).npy"
+  noisy_path: "data/noisy_train_19k_harder.npy"
+  clean_path: "data/clean_train_19k_harder.npy"
   val_split: 0.05
 
 output_dir: "results"
@@ -17,138 +17,152 @@ output_dir: "results"
 experiments:
 
   # ── Capacity ablation ─────────────────────────────────────────────────────
-  - name: unet_small
-    model:
-      architecture: unet
-      features: [16, 32, 64]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: unet_small
+  #   model:
+  #     architecture: unet
+  #     features: [16, 32, 64]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
-  - name: unet_baseline
-    model:
-      architecture: unet
-      features: [32, 64, 128]     # identical to homework 2
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: unet_baseline
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]     # identical to homework 2
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
-  - name: unet_large
-    model:
-      architecture: unet
-      features: [64, 128, 256]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: unet_large
+  #   model:
+  #     architecture: unet
+  #     features: [64, 128, 256]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
   # ── Architecture comparison ────────────────────────────────────────────────
-  - name: unet_deep
-    model:
-      architecture: unet_deep     # 4 encoder stages
-      features: [32, 64, 128, 256]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: unet_deep
+  #   model:
+  #     architecture: unet_deep     # 4 encoder stages
+  #     features: [32, 64, 128, 256]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adamw
+  #     lr: 5.0e-4
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
-  - name: res_unet
-    model:
-      architecture: res_unet      # residual double-conv blocks
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: res_unet
+  #   model:
+  #     architecture: res_unet      # residual double-conv blocks
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
-  - name: autoencoder
-    model:
-      architecture: autoencoder   # no skip connections
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: autoencoder
+  #   model:
+  #     architecture: autoencoder   # no skip connections
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
   # ── Loss function ablation ─────────────────────────────────────────────────
-  - name: unet_l1
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: l1
+  # - name: unet_l1
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: l1
 
-  - name: unet_combined
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: combined              # 0.5*MSE + 0.5*L1
+  # - name: unet_nvidia_loss
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: nvidia_loss
+    
+
+  # - name: unet_combined
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: combined              # 0.5*MSE + 0.5*L1
 
   # ── Optimizer / LR ablation ───────────────────────────────────────────────
-  - name: unet_adamw
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-3
-      scheduler: cosine
-      loss: mse
+  # - name: unet_adamw
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adamw
+  #     lr: 5.0e-4
+  #     weight_decay: 1.0e-3
+  #     scheduler: cosine
+  #     loss: mse
 
-  - name: unet_large_batch
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 64              # linear LR scaling rule
-      optimizer: adam
-      lr: 2.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: unet_large_batch
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 64              # linear LR scaling rule
+  #     optimizer: adam
+  #     lr: 2.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
   # ── ResNet flat denoiser ───────────────────────────────────────────────────
   - name: resnet_8blocks

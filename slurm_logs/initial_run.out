@@ -1,0 +1,38 @@
+Device: cuda
+Train: 18525  Val: 975
+
+============================================================
+Experiment: unet_small
+============================================================
+Parameters: 482,449
+  [unet_small]   1/60  train 0.005239  val 0.005147
+  [unet_small]  10/60  train 0.003512  val 0.003294
+  [unet_small]  20/60  train 0.003389  val 0.003252
+  [unet_small]  30/60  train 0.003323  val 0.007062
+  [unet_small]  40/60  train 0.003214  val 0.003546
+  [unet_small]  50/60  train 0.003132  val 0.002940
+  [unet_small]  60/60  train 0.003038  val 0.002780
+  -> Val MSE: 0.002780  PSNR: 25.56 dB
+
+============================================================
+Experiment: unet_l1
+============================================================
+Parameters: 1,926,433
+  [unet_l1]   1/60  train 0.052823  val 0.056331
+  [unet_l1]  10/60  train 0.043455  val 0.058267
+  [unet_l1]  20/60  train 0.042218  val 0.080905
+  [unet_l1]  30/60  train 0.041032  val 0.041295
+  [unet_l1]  40/60  train 0.038911  val 0.046474
+  [unet_l1]  50/60  train 0.035848  val 0.040450
+  [unet_l1]  60/60  train 0.034347  val 0.041260
+  -> Val MSE: 0.002665  PSNR: 25.74 dB
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+unet_l1                    unet         1,926,433  0.039764     25.74
+unet_small                 unet           482,449  0.002780     25.56
+============================================================================
