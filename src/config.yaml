@@ -3,49 +3,31 @@ seed: 42
 data:
   noisy_path: "data/noisy_train_19k_harder.npy"
   clean_path: "data/clean_train_19k_harder.npy"
-  test_noisy_path: "data/noisy_val_1k_harder.npy"   # blind test — no clean labels
+  test_noisy_path: "data/noisy_val_1k_harder.npy"   # blind test: no clean labels
   val_split: 0.05                                    # 5% of 19500 = 975 val images
 
 output_dir: "results"
 
-# Each experiment entry: name, model config, training config.
-# Run all:        python src/main.py
-# Run subset:     python src/main.py --run unet_baseline res_unet
-# Custom config:  python src/main.py --config path/to/config.yaml
+# Config layout:
+# - one block per model family
+# - inside each block you directly edit `model` and `training`
+# - the runner treats each family as one experiment
+#
+# Run all:    python src/main.py
+# Run one:    python src/main.py --run u_net
+#             python src/main.py --run u_net_attention
+#             python src/main.py --run res_net
 
-experiments:
+experiment_groups:
 
-  # ── Capacity ablation ─────────────────────────────────────────────────────
-  - name: unet_small
-    model:
-      architecture: unet
-      features: [16, 32, 64]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: unet_baseline
-    model:
-      architecture: unet
-      features: [32, 64, 128]     # identical to homework 2
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: unet_large
+  # Standard U-Net.
+  # Large setup for now: features [64, 128, 256].
+  # To try another U-Net variant, change `architecture` and/or `features` here.
+  u_net:
     model:
       architecture: unet
       features: [64, 128, 256]
+      dropout: 0.0
     training:
       epochs: 60
       batch_size: 32
@@ -55,118 +37,13 @@ experiments:
       scheduler: cosine
       loss: mse
 
-  # ── Architecture comparison ────────────────────────────────────────────────
-  - name: unet_deep
-    model:
-      architecture: unet_deep     # 4 encoder stages
-      features: [32, 64, 128, 256]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: res_unet
-    model:
-      architecture: res_unet      # residual double-conv blocks
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: autoencoder
-    model:
-      architecture: autoencoder   # no skip connections
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  # ── Loss function ablation ─────────────────────────────────────────────────
-  - name: unet_l1
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: l1
-
-  - name: unet_combined
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: combined              # 0.5*MSE + 0.5*L1
-
-  # ── Optimizer / LR ablation ───────────────────────────────────────────────
-  - name: unet_adamw
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-3
-      scheduler: cosine
-      loss: mse
-
-  - name: unet_large_batch
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 64              # linear LR scaling rule
-      optimizer: adam
-      lr: 2.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  # ── Attention U-Net ───────────────────────────────────────────────────────
-  - name: unet_attention
-    model:
-      architecture: unet_attention  # attention gates on all skip connections
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: unet_attention_large
+  # Attention U-Net.
+  # You can swap the architecture here if you want to test another attention-based model.
+  u_net_attention:
     model:
       architecture: unet_attention
       features: [64, 128, 256]
+      dropout: 0.0
     training:
       epochs: 60
       batch_size: 32
@@ -176,39 +53,15 @@ experiments:
       scheduler: cosine
       loss: mse
 
-  - name: res_unet_attention
-    model:
-      architecture: res_unet_attention  # residual blocks + attention gates
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  # ── ResNet flat denoiser ───────────────────────────────────────────────────
-  - name: resnet_8blocks
-    model:
-      architecture: resnet        # full-resolution stacked residual blocks
-      base_channels: 64
-      n_blocks: 8
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  - name: resnet_16blocks
+  # ResNet denoiser.
+  # Large setup for now: 16 residual blocks.
+  # Edit `base_channels` and `n_blocks` here to reshape the network.
+  res_net:
     model:
       architecture: resnet
       base_channels: 64
       n_blocks: 16
+      dropout: 0.0
     training:
       epochs: 60
       batch_size: 32
