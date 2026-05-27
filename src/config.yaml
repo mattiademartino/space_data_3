@@ -164,19 +164,19 @@ experiments:
   #     loss: mse
 
   # ── ResNet flat denoiser ───────────────────────────────────────────────────
-  - name: resnet_8blocks
-    model:
-      architecture: resnet        # full-resolution stacked residual blocks
-      base_channels: 64
-      n_blocks: 8
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # - name: resnet_8blocks
+  #   model:
+  #     architecture: resnet        # full-resolution stacked residual blocks
+  #     base_channels: 64
+  #     n_blocks: 8
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
   - name: resnet_16blocks
     model:

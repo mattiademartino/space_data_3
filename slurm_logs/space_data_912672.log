@@ -1,0 +1,24 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: resnet_8blocks
+============================================================
+Parameters: 593,153
+  [resnet_8blocks]   1/60  train 0.006224  val 0.004643
+  [resnet_8blocks]  10/60  train 0.003758  val 0.005496
+  [resnet_8blocks]  20/60  train 0.003652  val 0.003880
+  [resnet_8blocks]  30/60  train 0.003571  val 0.003447
+  [resnet_8blocks]  40/60  train 0.003452  val 0.003148
+  [resnet_8blocks]  50/60  train 0.003350  val 0.003097
+  [resnet_8blocks]  60/60  train 0.003263  val 0.002979
+  -> Val MSE: 0.002969  PSNR: 25.27 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/resnet_8blocks/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: resnet_16blocks
+============================================================
+Parameters: 1,185,025
+  [resnet_16blocks]   1/60  train 0.006449  val 0.004415
+  [resnet_16blocks]  10/60  train 0.003302  val 0.003011
+[2026-05-27T18:53:24.881+02:00] error: *** JOB 912672 ON eu-g3-069 CANCELLED AT 2026-05-27T18:53:24 DUE TO TIME LIMIT ***
