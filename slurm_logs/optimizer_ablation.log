@@ -1,0 +1,40 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: unet_adamw
+============================================================
+Parameters: 1,926,433
+  [unet_adamw]   1/60  train 0.005174  val 0.004394
+  [unet_adamw]  10/60  train 0.002873  val 0.002704
+  [unet_adamw]  20/60  train 0.002106  val 0.003174
+  [unet_adamw]  30/60  train 0.001380  val 0.002832
+  [unet_adamw]  40/60  train 0.001105  val 0.003098
+  [unet_adamw]  50/60  train 0.000957  val 0.002951
+  [unet_adamw]  60/60  train 0.000911  val 0.002954
+  -> Val MSE: 0.002647  PSNR: 25.77 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_adamw/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_large_batch
+============================================================
+Parameters: 1,926,433
+  [unet_large_batch]   1/60  train 0.005251  val 0.006495
+  [unet_large_batch]  10/60  train 0.003491  val 0.003877
+  [unet_large_batch]  20/60  train 0.003341  val 0.014491
+  [unet_large_batch]  30/60  train 0.003271  val 0.003773
+  [unet_large_batch]  40/60  train 0.003161  val 0.004796
+  [unet_large_batch]  50/60  train 0.003064  val 0.003942
+  [unet_large_batch]  60/60  train 0.002980  val 0.002789
+  -> Val MSE: 0.002789  PSNR: 25.55 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_large_batch/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+unet_adamw                 unet         1,926,433  0.002647     25.77
+unet_large_batch           unet         1,926,433  0.002789     25.55
+============================================================================

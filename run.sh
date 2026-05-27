@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=architecture_ablation
+#SBATCH --job-name=resnet_ablation
 #SBATCH -n 10
 #SBATCH --mem-per-cpu=8g
 #SBATCH --gpus=1

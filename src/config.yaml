@@ -136,59 +136,59 @@ experiments:
   #     scheduler: cosine
   #     loss: combined
 
-  #── Optimizer / LR ablation ───────────────────────────────────────────────
-  - name: unet_adamw
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-3
-      scheduler: cosine
-      loss: mse
-
-  - name: unet_large_batch
-    model:
-      architecture: unet
-      features: [32, 64, 128]
-    training:
-      epochs: 60
-      batch_size: 64              # linear LR scaling rule
-      optimizer: adam
-      lr: 2.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
-
-  # # ── ResNet flat denoiser ───────────────────────────────────────────────────
-  # - name: resnet_8blocks
+  # #── Optimizer / LR ablation ───────────────────────────────────────────────
+  # - name: unet_adamw
   #   model:
-  #     architecture: resnet        # full-resolution stacked residual blocks
-  #     base_channels: 64
-  #     n_blocks: 8
-  #   training:
-  #     epochs: 60
-  #     batch_size: 32
-  #     optimizer: adam
-  #     lr: 1.0e-3
-  #     weight_decay: 1.0e-4
-  #     scheduler: cosine
-  #     loss: mse
-
-  # - name: resnet_16blocks
-  #   model:
-  #     architecture: resnet
-  #     base_channels: 64
-  #     n_blocks: 16
-  #     dropout: 0.0
+  #     architecture: unet
+  #     features: [32, 64, 128]
   #   training:
   #     epochs: 60
   #     batch_size: 32
   #     optimizer: adamw
   #     lr: 5.0e-4
+  #     weight_decay: 1.0e-3
+  #     scheduler: cosine
+  #     loss: mse
+
+  # - name: unet_large_batch
+  #   model:
+  #     architecture: unet
+  #     features: [32, 64, 128]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 64              # linear LR scaling rule
+  #     optimizer: adam
+  #     lr: 2.0e-3
   #     weight_decay: 1.0e-4
   #     scheduler: cosine
   #     loss: mse
+
+  # ── ResNet flat denoiser ───────────────────────────────────────────────────
+  - name: resnet_8blocks
+    model:
+      architecture: resnet        # full-resolution stacked residual blocks
+      base_channels: 64
+      n_blocks: 8
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adam
+      lr: 1.0e-3
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: mse
+
+  - name: resnet_16blocks
+    model:
+      architecture: resnet
+      base_channels: 64
+      n_blocks: 16
+      dropout: 0.0
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: mse
