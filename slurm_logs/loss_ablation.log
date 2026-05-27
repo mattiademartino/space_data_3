@@ -1,0 +1,55 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: unet_l1
+============================================================
+Parameters: 1,926,433
+  [unet_l1]   1/60  train 0.055665  val 0.050588
+  [unet_l1]  10/60  train 0.043631  val 0.041294
+  [unet_l1]  20/60  train 0.042195  val 0.043955
+  [unet_l1]  30/60  train 0.040982  val 0.044781
+  [unet_l1]  40/60  train 0.038966  val 0.039827
+  [unet_l1]  50/60  train 0.035465  val 0.040081
+  [unet_l1]  60/60  train 0.033904  val 0.040899
+  -> Val MSE: 0.002637  PSNR: 25.79 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_l1/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_nvidia_loss
+============================================================
+Parameters: 1,926,433
+  [unet_nvidia_loss]   1/60  train 0.057755  val 0.055132
+  [unet_nvidia_loss]  10/60  train 0.040662  val 0.042294
+  [unet_nvidia_loss]  20/60  train 0.039035  val 0.038394
+  [unet_nvidia_loss]  30/60  train 0.037915  val 0.037540
+  [unet_nvidia_loss]  40/60  train 0.036892  val 0.037813
+  [unet_nvidia_loss]  50/60  train 0.035796  val 0.037493
+  [unet_nvidia_loss]  60/60  train 0.034993  val 0.034965
+  -> Val MSE: 0.002867  PSNR: 25.43 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_nvidia_loss/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_combined
+============================================================
+Parameters: 1,926,433
+  [unet_combined]   1/60  train 0.030226  val 0.028494
+  [unet_combined]  10/60  train 0.023526  val 0.026083
+  [unet_combined]  20/60  train 0.023004  val 0.028721
+  [unet_combined]  30/60  train 0.022477  val 0.031461
+  [unet_combined]  40/60  train 0.021666  val 0.024741
+  [unet_combined]  50/60  train 0.020323  val 0.021819
+  [unet_combined]  60/60  train 0.019308  val 0.021758
+  -> Val MSE: 0.002609  PSNR: 25.84 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_combined/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+unet_combined              unet         1,926,433  0.021018     25.84
+unet_l1                    unet         1,926,433  0.039553     25.79
+unet_nvidia_loss           unet         1,926,433  0.034949     25.43
+============================================================================

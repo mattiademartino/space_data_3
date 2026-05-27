@@ -1,0 +1,55 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: unet_small
+============================================================
+Parameters: 482,449
+  [unet_small]   1/60  train 0.005239  val 0.004472
+  [unet_small]  10/60  train 0.003530  val 0.003575
+  [unet_small]  20/60  train 0.003434  val 0.003338
+  [unet_small]  30/60  train 0.003346  val 0.004239
+  [unet_small]  40/60  train 0.003229  val 0.004110
+  [unet_small]  50/60  train 0.003141  val 0.002852
+  [unet_small]  60/60  train 0.003045  val 0.002794
+  -> Val MSE: 0.002794  PSNR: 25.54 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_small/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_baseline
+============================================================
+Parameters: 1,926,433
+  [unet_baseline]   1/60  train 0.004685  val 0.004555
+  [unet_baseline]  10/60  train 0.003456  val 0.007084
+  [unet_baseline]  20/60  train 0.003389  val 0.011251
+  [unet_baseline]  30/60  train 0.003313  val 0.004337
+  [unet_baseline]  40/60  train 0.003208  val 0.002943
+  [unet_baseline]  50/60  train 0.003094  val 0.003129
+  [unet_baseline]  60/60  train 0.003051  val 0.002783
+  -> Val MSE: 0.002783  PSNR: 25.55 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_baseline/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_large
+============================================================
+Parameters: 7,699,009
+  [unet_large]   1/60  train 0.005118  val 0.004726
+  [unet_large]  10/60  train 0.003770  val 0.007561
+  [unet_large]  20/60  train 0.003718  val 0.004449
+  [unet_large]  30/60  train 0.003613  val 0.004943
+  [unet_large]  40/60  train 0.003577  val 0.003794
+  [unet_large]  50/60  train 0.003483  val 0.003190
+  [unet_large]  60/60  train 0.003423  val 0.003118
+  -> Val MSE: 0.003118  PSNR: 25.06 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_large/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+unet_baseline              unet         1,926,433  0.002783     25.55
+unet_small                 unet           482,449  0.002794     25.54
+unet_large                 unet         7,699,009  0.003118     25.06
+============================================================================

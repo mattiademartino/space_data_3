@@ -44,14 +44,15 @@ def build_criterion(cfg: dict) -> nn.Module:
         return nn.L1Loss()
     elif loss == "combined":
         _mse, _l1 = nn.MSELoss(), nn.L1Loss()
-    elif loss == "nvidia_loss":
-        return nvidia_loss.MixLoss()
 
         class _Combined(nn.Module):
             def forward(self, pred, target):
                 return 0.5 * _mse(pred, target) + 0.5 * _l1(pred, target)
 
         return _Combined()
+    elif loss == "nvidia_loss":
+        return nvidia_loss.MixLoss()
+
     raise ValueError(f"Unknown loss: {loss!r}")
 
 

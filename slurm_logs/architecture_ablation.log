@@ -1,0 +1,55 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: unet_deep
+============================================================
+Parameters: 7,762,465
+  [unet_deep]   1/60  train 0.006582  val 0.004872
+  [unet_deep]  10/60  train 0.002173  val 0.002210
+  [unet_deep]  20/60  train 0.001410  val 0.002019
+  [unet_deep]  30/60  train 0.001072  val 0.001966
+  [unet_deep]  40/60  train 0.000918  val 0.002372
+  [unet_deep]  50/60  train 0.000794  val 0.001908
+  [unet_deep]  60/60  train 0.000760  val 0.001915
+  -> Val MSE: 0.001899  PSNR: 27.22 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_deep/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: res_unet
+============================================================
+Parameters: 2,012,481
+  [res_unet]   1/60  train 0.004718  val 0.004452
+  [res_unet]  10/60  train 0.003439  val 0.003800
+  [res_unet]  20/60  train 0.003349  val 0.003301
+  [res_unet]  30/60  train 0.003288  val 0.003086
+  [res_unet]  40/60  train 0.003198  val 0.003810
+  [res_unet]  50/60  train 0.003094  val 0.002824
+  [res_unet]  60/60  train 0.003041  val 0.002831
+  -> Val MSE: 0.002771  PSNR: 25.57 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/res_unet/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: autoencoder
+============================================================
+Parameters: 1,732,897
+  [autoencoder]   1/60  train 0.006992  val 0.006670
+  [autoencoder]  10/60  train 0.004679  val 0.005164
+  [autoencoder]  20/60  train 0.004191  val 0.017648
+  [autoencoder]  30/60  train 0.004018  val 0.004749
+  [autoencoder]  40/60  train 0.003845  val 0.005732
+  [autoencoder]  50/60  train 0.003603  val 0.003528
+  [autoencoder]  60/60  train 0.003404  val 0.003370
+  -> Val MSE: 0.003334  PSNR: 24.77 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/autoencoder/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+unet_deep                  unet_deep    7,762,465  0.001899     27.22
+res_unet                   res_unet     2,012,481  0.002771     25.57
+autoencoder                autoencoder  1,732,897  0.003334     24.77
+============================================================================
