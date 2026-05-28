@@ -1,0 +1,25 @@
+Device: cuda
+Train: 18525  Val: 975  Test (blind): 1000
+
+============================================================
+Experiment: resnet_16blocks
+============================================================
+Parameters: 1,185,025
+  [resnet_16blocks]   1/60  train 0.006731  val 0.004934
+  [resnet_16blocks]  10/60  train 0.003414  val 0.003652
+  [resnet_16blocks]  20/60  train 0.003023  val 0.003105
+  [resnet_16blocks]  30/60  train 0.002772  val 0.002896
+  [resnet_16blocks]  40/60  train 0.002543  val 0.003927
+  [resnet_16blocks]  50/60  train 0.002217  val 0.002722
+  [resnet_16blocks]  60/60  train 0.002070  val 0.002770
+  -> Val MSE: 0.002556  PSNR: 25.92 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/resnet_16blocks/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+resnet_16blocks            resnet       1,185,025  0.002556     25.92
+============================================================================
