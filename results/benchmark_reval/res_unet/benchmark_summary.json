@@ -1,0 +1,10 @@
+{
+  "name": "res_unet",
+  "architecture": "res_unet",
+  "checkpoint": "/home/mattia/uni/space_data/space_data_3/results/res_unet/best_model.pt",
+  "config": "/home/mattia/uni/space_data/space_data_3/src/config_initial.yaml",
+  "prediction_path": "/home/mattia/uni/space_data/space_data_3/results/benchmark_reval/res_unet/benchmark_predictions.npy",
+  "benchmark_loss": "",
+  "benchmark_mse": "",
+  "benchmark_psnr": ""
+}
