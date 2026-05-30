@@ -4,7 +4,7 @@ data:
   noisy_path: "data/noisy_train_19k_harder.npy"
   clean_path: "data/clean_train_19k_harder.npy"
   test_noisy_path: "data/noisy_val_1k_harder.npy"   # blind test: no clean labels
-  val_split: 0.05                                    # 5% of 19500 = 975 val images
+  val_split: 0.15                                    # 5% of 19500 = 975 val images
 
 output_dir: "results"
 
@@ -53,9 +53,9 @@ experiment_groups:
       scheduler: cosine
       loss: mse
 
-  # ResNet denoiser.
-  # Large setup for now: 16 residual blocks.
-  # Edit `base_channels` and `n_blocks` here to reshape the network.
+  # # ResNet denoiser.
+  # # Large setup for now: 16 residual blocks.
+  # # Edit `base_channels` and `n_blocks` here to reshape the network.
   res_net:
     model:
       architecture: resnet

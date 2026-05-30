@@ -57,7 +57,7 @@ def parse_args():
     """Read the small CLI surface for this benchmark runner."""
     p = argparse.ArgumentParser(description="Benchmark denoising architectures")
     # Config controls data paths, model definitions, and training hyperparameters.
-    p.add_argument("--config", default=str(ROOT / "src" / "config.yaml"),
+    p.add_argument("--config", default=str(ROOT / "src" / "config_next.yaml"),
                    help="Path to config.yaml")
     # Optional filter so we do not have to train every experiment every time.
     p.add_argument("--run", nargs="*", metavar="NAME",

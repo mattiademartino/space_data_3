@@ -4,7 +4,7 @@
 #SBATCH --mem-per-cpu=8g
 #SBATCH --gpus=1
 #SBATCH --gres=gpumem:20g
-#SBATCH --time=11:59:00
+#SBATCH --time=0:59:00
 #SBATCH --output=slurm_logs/space_data_%j.log
 
 # 2. Activate your virtual environment

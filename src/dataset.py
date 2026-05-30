@@ -40,7 +40,7 @@ def load_data(data_cfg: dict, project_root: Path, seed: int = 42):
     clean = np.load(project_root / data_cfg["clean_path"])
     dataset = LunarDataset(noisy, clean)
 
-    val_split = float(data_cfg.get("val_split", 0.05))
+    val_split = float(data_cfg.get("val_split", 0.15))
     val_size = int(val_split * len(dataset))
     train_size = len(dataset) - val_size
     gen = torch.Generator().manual_seed(seed)
