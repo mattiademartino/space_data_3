@@ -23,35 +23,35 @@ experiment_groups:
   # Standard U-Net.
   # Large setup for now: features [64, 128, 256].
   # To try another U-Net variant, change `architecture` and/or `features` here.
-  u_net:
-    model:
-      architecture: unet
-      features: [64, 128, 256]
-      dropout: 0.0
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adam
-      lr: 1.0e-3
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # u_net:
+  #   model:
+  #     architecture: unet
+  #     features: [64, 128, 256]
+  #     dropout: 0.0
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adam
+  #     lr: 1.0e-3
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
-  # Attention U-Net.
-  # You can swap the architecture here if you want to test another attention-based model.
-  u_net_attention:
-    model:
-      architecture: unet_attention
-      features: [64, 128, 256]
-      dropout: 0.0
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: mse
+  # # Attention U-Net.
+  # # You can swap the architecture here if you want to test another attention-based model.
+  # u_net_attention:
+  #   model:
+  #     architecture: unet_attention
+  #     features: [64, 128, 256]
+  #     dropout: 0.0
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adamw
+  #     lr: 5.0e-4
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: mse
 
   # # ResNet denoiser.
   # # Large setup for now: 16 residual blocks.

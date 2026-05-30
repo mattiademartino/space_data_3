@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH --job-name=rebenchmark
+#SBATCH --job-name=unet_resnet_test_advanced
 #SBATCH -n 10
 #SBATCH --mem-per-cpu=8g
 #SBATCH --gpus=1
 #SBATCH --gres=gpumem:20g
-#SBATCH --time=0:59:00
+#SBATCH --time=5:59:00
 #SBATCH --output=slurm_logs/space_data_%j.log
 
 # 2. Activate your virtual environment
 source /cluster/home/mriestere/space_data_3/venv/bin/activate
 
 # 3. Run your code
-python src/rebenchmark.py
+python src/main.py

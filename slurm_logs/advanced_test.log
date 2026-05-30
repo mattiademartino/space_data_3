@@ -1,0 +1,42 @@
+Device: cuda
+Train: 16575  Val: 2925  Test (blind): 1000
+
+============================================================
+Experiment: u_net
+============================================================
+Parameters: 7,699,009
+  [u_net]   1/60  train 0.005421  val 0.004294
+  [u_net]  10/60  train 0.003820  val 0.005709
+  [u_net]  20/60  train 0.003727  val 0.004466
+  [u_net]  30/60  train 0.003654  val 0.005343
+  [u_net]  40/60  train 0.003566  val 0.003529
+  [u_net]  50/60  train 0.003463  val 0.004035
+  [u_net]  60/60  train 0.003424  val 0.003189
+  -> Val MSE: 0.003157  PSNR: 25.01 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: u_net_attention
+============================================================
+Parameters: 7,786,602
+  [u_net_attention]   1/60  train 0.004474  val 0.004884
+  [u_net_attention]  10/60  train 0.002723  val 0.002879
+  [u_net_attention]  20/60  train 0.001816  val 0.003110
+  [u_net_attention]  30/60  train 0.001175  val 0.003207
+  [u_net_attention]  40/60  train 0.000920  val 0.002885
+  [u_net_attention]  50/60  train 0.000820  val 0.002907
+  [u_net_attention]  60/60  train 0.000779  val 0.002867
+  -> Val MSE: 0.002559  PSNR: 25.92 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_attention/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: res_net
+============================================================
+Parameters: 1,185,025
+  [res_net]   1/60  train 0.006681  val 0.004919
+  [res_net]  10/60  train 0.003422  val 0.003600
+  [res_net]  20/60  train 0.003097  val 0.003417
+  [res_net]  30/60  train 0.002839  val 0.002669
+  [res_net]  40/60  train 0.002643  val 0.002604
+  [res_net]  50/60  train 0.002391  val 0.002653
+[2026-05-30T20:03:17.848+02:00] error: *** JOB 1435478 ON eu-g3-069 CANCELLED AT 2026-05-30T20:03:17 DUE TO TIME LIMIT ***
