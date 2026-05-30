@@ -47,7 +47,7 @@ def parse_args():
     )
     p.add_argument(
         "--noisy-path",
-        default=str(ROOT / "data" / "noisy_val_1k_harder.npy"),
+        default=str(ROOT / "data" / "noisy_val_500_harder.npy"),
         help="Path to the noisy benchmark dataset.",
     )
     p.add_argument(

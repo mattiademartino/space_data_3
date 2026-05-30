@@ -1,9 +1,9 @@
 {
   "name": "unet_large",
   "architecture": "unet",
-  "checkpoint": "/home/mattia/uni/space_data/space_data_3/results/unet_large/best_model.pt",
-  "config": "/home/mattia/uni/space_data/space_data_3/src/config_initial.yaml",
-  "prediction_path": "/home/mattia/uni/space_data/space_data_3/results/benchmark_reval/unet_large/benchmark_predictions.npy",
+  "checkpoint": "/cluster/home/mriestere/space_data_3/results/unet_large/best_model.pt",
+  "config": "/cluster/home/mriestere/space_data_3/src/config_initial.yaml",
+  "prediction_path": "/cluster/home/mriestere/space_data_3/results/benchmark_reval/unet_large/benchmark_predictions.npy",
   "benchmark_loss": "",
   "benchmark_mse": "",
   "benchmark_psnr": ""
