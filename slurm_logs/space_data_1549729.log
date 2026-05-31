@@ -1,0 +1,35 @@
+Device: cuda
+Train: 16575  Val: 2925  Test (blind): 1000
+
+============================================================
+Experiment: u_net_attention_medium
+============================================================
+Parameters: 1,948,730
+  [u_net_attention_medium]   1/60  train 0.004804  val 0.004271
+  [u_net_attention_medium]  10/60  train 0.002760  val 0.002912
+  [u_net_attention_medium]  20/60  train 0.001768  val 0.003484
+  [u_net_attention_medium]  30/60  train 0.001212  val 0.003054
+  [u_net_attention_medium]  40/60  train 0.001008  val 0.003007
+  [u_net_attention_medium]  50/60  train 0.000896  val 0.003009
+  [u_net_attention_medium]  60/60  train 0.000864  val 0.002998
+  -> Val MSE: 0.002741  PSNR: 25.62 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_attention_medium/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: u_net_attention_medium_tanh
+============================================================
+Parameters: 1,948,730
+  [u_net_attention_medium_tanh]   1/60  train 0.004738  val 0.003500
+  [u_net_attention_medium_tanh]  10/60  train 0.002739  val 0.003036
+  [u_net_attention_medium_tanh]  20/60  train 0.001751  val 0.002842
+  [u_net_attention_medium_tanh]  30/60  train 0.001202  val 0.003017
+  [u_net_attention_medium_tanh]  40/60  train 0.001009  val 0.003021
+  [u_net_attention_medium_tanh]  50/60  train 0.000903  val 0.003001
+  [u_net_attention_medium_tanh]  60/60  train 0.000873  val 0.003005
+  -> Val MSE: 0.002649  PSNR: 25.77 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_attention_medium_tanh/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: u_net_large_tanh
+============================================================
+Parameters: 7,699,009

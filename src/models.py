@@ -45,9 +45,10 @@ class ResDoubleConv(nn.Module):
 
 class UNet(nn.Module):
     """Standard 3-stage U-Net (same as homework 2 baseline)."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = DoubleConv(1, f[0], dropout)
         self.enc2 = DoubleConv(f[0], f[1], dropout)
@@ -69,14 +70,19 @@ class UNet(nn.Module):
         d3 = self.dec3(torch.cat([self.up3(b), e3], dim=1))
         d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
         d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
-        return torch.sigmoid(self.out_conv(d1))
+        
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class UNetDeep(nn.Module):
     """4-stage U-Net; bottleneck at 4×4 for 64×64 inputs."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128, 256), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128, 256), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = DoubleConv(1, f[0], dropout)
         self.enc2 = DoubleConv(f[0], f[1], dropout)
@@ -103,14 +109,19 @@ class UNetDeep(nn.Module):
         d3 = self.dec3(torch.cat([self.up3(d4), e3], dim=1))
         d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
         d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
-        return torch.sigmoid(self.out_conv(d1))
+        
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class ResUNet(nn.Module):
     """3-stage U-Net with residual double-conv blocks."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = ResDoubleConv(1, f[0], dropout)
         self.enc2 = ResDoubleConv(f[0], f[1], dropout)
@@ -132,14 +143,19 @@ class ResUNet(nn.Module):
         d3 = self.dec3(torch.cat([self.up3(b), e3], dim=1))
         d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
         d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
-        return torch.sigmoid(self.out_conv(d1))
+        
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class Autoencoder(nn.Module):
     """Symmetric CNN encoder-decoder without skip connections."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = DoubleConv(1, f[0], dropout)
         self.enc2 = DoubleConv(f[0], f[1], dropout)
@@ -161,18 +177,16 @@ class Autoencoder(nn.Module):
         d3 = self.dec3(self.up3(b))
         d2 = self.dec2(self.up2(d3))
         d1 = self.dec1(self.up1(d2))
-        return torch.sigmoid(self.out_conv(d1))
+        
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class AttentionGate(nn.Module):
-    """Soft spatial attention gate for skip connections (Oktay et al. 2018).
-
-    Computes per-pixel attention coefficients alpha ∈ [0,1] by combining
-    the gating signal g (from the decoder path) with the skip feature x
-    (from the encoder path).  The returned tensor is x * alpha, suppressing
-    irrelevant background regions before concatenation in the decoder.
-    """
-    def __init__(self, f_g: int, f_l: int, f_int: int):
+    """Soft spatial attention gate for skip connections (Oktay et al. 2018)."""
+    def __init__(self, f_g: int, f_l: int, f_int: int, output_fct: str = "sigmoid"):
         super().__init__()
         self.W_g = nn.Sequential(
             nn.Conv2d(f_g, f_int, 1, bias=True),
@@ -196,9 +210,10 @@ class AttentionGate(nn.Module):
 
 class UNetAttention(nn.Module):
     """3-stage U-Net with attention gates on all skip connections."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = DoubleConv(1, f[0], dropout)
         self.enc2 = DoubleConv(f[0], f[1], dropout)
@@ -234,14 +249,18 @@ class UNetAttention(nn.Module):
         g1 = self.up1(d2)
         d1 = self.dec1(torch.cat([g1, self.att1(g1, e1)], dim=1))
 
-        return torch.sigmoid(self.out_conv(d1))
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class ResUNetAttention(nn.Module):
     """3-stage U-Net with residual double-conv blocks AND attention gates."""
-    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0):
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         f = features
+        self.output_fct = output_fct
         self.pool = nn.MaxPool2d(2)
         self.enc1 = ResDoubleConv(1, f[0], dropout)
         self.enc2 = ResDoubleConv(f[0], f[1], dropout)
@@ -277,12 +296,15 @@ class ResUNetAttention(nn.Module):
         g1 = self.up1(d2)
         d1 = self.dec1(torch.cat([g1, self.att1(g1, e1)], dim=1))
 
-        return torch.sigmoid(self.out_conv(d1))
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 class ResBlock(nn.Module):
     """Single residual block: Conv-BN-ReLU-Conv-BN + identity skip."""
-    def __init__(self, channels: int, dropout: float = 0.0):
+    def __init__(self, channels: int, dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
         layers = [
             nn.Conv2d(channels, channels, 3, padding=1, bias=False),
@@ -301,13 +323,10 @@ class ResBlock(nn.Module):
 
 
 class ResNetDenoiser(nn.Module):
-    """
-    Flat ResNet denoiser — full resolution throughout (no pooling/upsampling).
-    Processes the image with stacked residual blocks, keeping spatial dims fixed.
-    Unlike U-Net, context is captured through receptive field growth, not skip connections.
-    """
-    def __init__(self, base_channels: int = 64, n_blocks: int = 8, dropout: float = 0.0):
+    """Flat ResNet denoiser — full resolution throughout (no pooling/upsampling)."""
+    def __init__(self, base_channels: int = 64, n_blocks: int = 8, dropout: float = 0.0, output_fct: str = "sigmoid"):
         super().__init__()
+        self.output_fct = output_fct
         self.head = nn.Sequential(
             nn.Conv2d(1, base_channels, 3, padding=1, bias=False),
             nn.BatchNorm2d(base_channels),
@@ -317,29 +336,33 @@ class ResNetDenoiser(nn.Module):
         self.tail = nn.Conv2d(base_channels, 1, 3, padding=1)
 
     def forward(self, x):
-        return torch.sigmoid(self.tail(self.body(self.head(x))))
+        out = self.tail(self.body(self.head(x)))
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
 
 
 def build_model(model_cfg: dict) -> nn.Module:
     arch = model_cfg["architecture"]
     features = list(model_cfg.get("features", [32, 64, 128]))
     dropout = float(model_cfg.get("dropout", 0.0))
-
+    output_fct = str(model_cfg.get("output_fct", "sigmoid"))
+    
     if arch == "unet":
-        return UNet(features, dropout)
+        return UNet(features, dropout, output_fct)
     elif arch == "unet_deep":
-        return UNetDeep(features, dropout)
+        return UNetDeep(features, dropout, output_fct)
     elif arch == "res_unet":
-        return ResUNet(features, dropout)
+        return ResUNet(features, dropout, output_fct)
     elif arch == "unet_attention":
-        return UNetAttention(features, dropout)
+        return UNetAttention(features, dropout, output_fct)
     elif arch == "res_unet_attention":
-        return ResUNetAttention(features, dropout)
+        return ResUNetAttention(features, dropout, output_fct)
     elif arch == "autoencoder":
-        return Autoencoder(features, dropout)
+        return Autoencoder(features, dropout, output_fct)
     elif arch == "resnet":
         base_channels = int(model_cfg.get("base_channels", 64))
         n_blocks = int(model_cfg.get("n_blocks", 8))
-        return ResNetDenoiser(base_channels, n_blocks, dropout)
+        return ResNetDenoiser(base_channels, n_blocks, dropout, output_fct)
     else:
         raise ValueError(f"Unknown architecture: {arch!r}")
