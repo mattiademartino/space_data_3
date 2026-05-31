@@ -33,3 +33,35 @@ Parameters: 1,948,730
 Experiment: u_net_large_tanh
 ============================================================
 Parameters: 7,699,009
+  [u_net_large_tanh]   1/60  train 0.005413  val 0.004454
+  [u_net_large_tanh]  10/60  train 0.003510  val 0.006535
+  [u_net_large_tanh]  20/60  train 0.003417  val 0.003450
+  [u_net_large_tanh]  30/60  train 0.003351  val 0.003805
+  [u_net_large_tanh]  40/60  train 0.003230  val 0.005773
+  [u_net_large_tanh]  50/60  train 0.003150  val 0.002990
+  [u_net_large_tanh]  60/60  train 0.003061  val 0.002838
+  -> Val MSE: 0.002838  PSNR: 25.47 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_large_tanh/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: u_net_medium_tanh
+============================================================
+Parameters: 1,926,433
+  [u_net_medium_tanh]   1/60  train 0.007037  val 0.005261
+  [u_net_medium_tanh]  10/60  train 0.003584  val 0.004111
+  [u_net_medium_tanh]  20/60  train 0.003393  val 0.008884
+  [u_net_medium_tanh]  30/60  train 0.003320  val 0.004925
+  [u_net_medium_tanh]  40/60  train 0.003227  val 0.003011
+  [u_net_medium_tanh]  50/60  train 0.003089  val 0.003367
+  [u_net_medium_tanh]  60/60  train 0.002990  val 0.002819
+  -> Val MSE: 0.002819  PSNR: 25.50 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_medium_tanh/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: u_net_attention_large_tanh
+============================================================
+Parameters: 7,786,602
+  [u_net_attention_large_tanh]   1/60  train 0.005197  val 0.004980
+  [u_net_attention_large_tanh]  10/60  train 0.002794  val 0.002893
+  [u_net_attention_large_tanh]  20/60  train 0.001719  val 0.003019
+  [u_net_attention_large_tanh]  30/60  train 0.001091  val 0.003314
