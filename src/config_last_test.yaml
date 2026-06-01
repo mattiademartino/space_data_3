@@ -1,0 +1,54 @@
+seed: 42
+
+data:
+  noisy_path: "data/noisy_train_19k_harder.npy"
+  clean_path: "data/clean_train_19k_harder.npy"
+  test_noisy_path: "data/noisy_val_1k_harder.npy"   # blind test: no clean labels
+  val_split: 0.15                                    # 5% of 19500 = 975 val images
+
+output_dir: "results"
+
+# Config layout:
+# - one block per model family
+# - inside each block you directly edit `model` and `training`
+# - the runner treats each family as one experiment
+#
+# Run all:    python src/main.py
+# Run one:    python src/main.py --run u_net
+#             python src/main.py --run u_net_attention
+#             python src/main.py --run res_net
+
+experiment_groups:
+
+  # # Attention U-Net.
+  # # You can swap the architecture here if you want to test another attention-based model.
+  u_net_attention_deep:
+    model:
+      architecture: unet_attention
+      features: [32, 64, 128, 256]
+      dropout: 0.0
+    training:
+      epochs: 20
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: combined
+
+
+  res_net_attention:
+    model:
+      architecture: resnet
+      base_channels: 64
+      n_blocks: 16
+      dropout: 0.0
+    training:
+      epochs: 20
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: combined
+

@@ -1,0 +1,32 @@
+Device: cuda
+Train: 16575  Val: 2925  Test (blind): 1000
+
+============================================================
+Experiment: u_net_attention_deep
+============================================================
+Parameters: 1,948,730
+  [u_net_attention_deep]   1/20  train 0.029464  val 0.027419
+  [u_net_attention_deep]  10/20  train 0.021443  val 0.022161
+  [u_net_attention_deep]  20/20  train 0.017393  val 0.021893
+  -> Val MSE: 0.002692  PSNR: 25.70 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/u_net_attention_deep/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: res_net_attention
+============================================================
+Parameters: 1,185,025
+  [res_net_attention]   1/20  train 0.033893  val 0.028635
+  [res_net_attention]  10/20  train 0.023900  val 0.025082
+  [res_net_attention]  20/20  train 0.022104  val 0.021197
+  -> Val MSE: 0.002681  PSNR: 25.72 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/res_net_attention/test_predictions.npy (1000 images)
+
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_results.csv
+Saved: /cluster/home/mriestere/space_data_3/results/benchmark_comparison.png
+
+============================================================================
+Experiment                 Arch            Params   BestVal   PSNR dB
+----------------------------------------------------------------------------
+res_net_attention          resnet       1,185,025  0.021197     25.72
+u_net_attention_deep       unet_attention 1,948,730  0.021173     25.70
+============================================================================

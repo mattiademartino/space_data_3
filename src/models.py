@@ -76,6 +76,61 @@ class UNet(nn.Module):
             return (torch.tanh(out) + 1) / 2
         return torch.sigmoid(out)
 
+class UNetAttentionDeep(nn.Module):
+    """3-stage U-Net with attention gates on all skip connections."""
+    def __init__(self, features: Sequence[int] = (32, 64, 128), dropout: float = 0.0, output_fct: str = "sigmoid"):
+        super().__init__()
+        f = features
+        self.output_fct = output_fct
+        self.pool = nn.MaxPool2d(2)
+        self.enc1 = DoubleConv(1, f[0], dropout)
+        self.enc2 = DoubleConv(f[0], f[1], dropout)
+        self.enc3 = DoubleConv(f[1], f[2], dropout)
+        self.enc4 = DoubleConv(f[2], f[3], dropout)
+        self.bottleneck = DoubleConv(f[2], f[2] * 2, dropout)
+
+        self.up4 = nn.ConvTranspose2d(f[3] * 2, f[3], 2, stride=2)
+        self.att4 = AttentionGate(f_g=f[3], f_l=f[3], f_int=max(f[3] // 2, 1))
+        self.dec4 = DoubleConv(f[3] * 2, f[3], dropout)
+
+        self.up3 = nn.ConvTranspose2d(f[3] * 2, f[2], 2, stride=2)
+        self.att3 = AttentionGate(f_g=f[2], f_l=f[2], f_int=max(f[2] // 2, 1))
+        self.dec3 = DoubleConv(f[2] * 2, f[2], dropout)
+
+        self.up2 = nn.ConvTranspose2d(f[2], f[1], 2, stride=2)
+        self.att2 = AttentionGate(f_g=f[1], f_l=f[1], f_int=max(f[1] // 2, 1))
+        self.dec2 = DoubleConv(f[1] * 2, f[1], dropout)
+
+        self.up1 = nn.ConvTranspose2d(f[1], f[0], 2, stride=2)
+        self.att1 = AttentionGate(f_g=f[0], f_l=f[0], f_int=max(f[0] // 2, 1))
+        self.dec1 = DoubleConv(f[0] * 2, f[0], dropout)
+
+        self.out_conv = nn.Conv2d(f[0], 1, 1)
+
+    def forward(self, x):
+        e1 = self.enc1(x)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        e4 = self.enc4(self.pool(e3))
+        b = self.bottleneck(self.pool(e4))
+
+        g4 = self.up4(b)
+        d4 = self.dec4(torch.cat([g4, self.att4(g4,e4)], dim=1))
+
+        g3 = self.up3(d4)
+        d3 = self.dec3(torch.cat([g3, self.att3(g3, e3)], dim=1))
+
+        g2 = self.up2(d3)
+        d2 = self.dec2(torch.cat([g2, self.att2(g2, e2)], dim=1))
+
+        g1 = self.up1(d2)
+        d1 = self.dec1(torch.cat([g1, self.att1(g1, e1)], dim=1))
+
+        out = self.out_conv(d1)
+        if self.output_fct == "tanh":
+            return (torch.tanh(out) + 1) / 2
+        return torch.sigmoid(out)
+
 
 class UNetDeep(nn.Module):
     """4-stage U-Net; bottleneck at 4×4 for 64×64 inputs."""

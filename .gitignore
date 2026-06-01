@@ -1,2 +1,5 @@
 venv/
 data/*
+results/dinov2/***/*.pt
+results/***/***/*.pt
+**/*.pt

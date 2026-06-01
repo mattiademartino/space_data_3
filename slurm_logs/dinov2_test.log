@@ -1,0 +1,22 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Device: cuda
+Train: 16575  Val: 2925
+Loading DINOv2-large …
+Loading weights:   0%|          | 0/439 [00:00<?, ?it/s]Loading weights:  46%|████▌     | 200/439 [00:00<00:00, 1977.63it/s]Loading weights:  92%|█████████▏| 405/439 [00:00<00:00, 2018.43it/s]Loading weights: 100%|██████████| 439/439 [00:00<00:00, 2047.80it/s]
+Total parameters:     309,862,337
+Trainable parameters: 5,493,697
+Trainable parameters: 5,493,697
+  [dinov2_denoiser]   1/40  train 0.007154  val 0.005461  lr 9.98e-05
+  [dinov2_denoiser]   5/40  train 0.004249  val 0.003944  lr 9.62e-05
+  [dinov2_denoiser]  10/40  train 0.003418  val 0.003417  lr 8.54e-05
+  [dinov2_denoiser]  15/40  train 0.002897  val 0.003387  lr 6.91e-05
+  [dinov2_denoiser]  20/40  train 0.002446  val 0.003306  lr 5.00e-05
+  [dinov2_denoiser]  25/40  train 0.002149  val 0.003397  lr 3.09e-05
+  [dinov2_denoiser]  30/40  train 0.001958  val 0.003221  lr 1.46e-05
+  [dinov2_denoiser]  35/40  train 0.001856  val 0.003222  lr 3.81e-06
+  [dinov2_denoiser]  40/40  train 0.001827  val 0.003216  lr 0.00e+00
+  Saved: results/dinov2/loss_curves.png
+
+Val MSE:  0.003204
+Val PSNR: 24.94 dB
+  Saved: results/dinov2/comparison_val.png

@@ -1,0 +1,111 @@
+seed: 42
+
+data:
+  noisy_path: "data/noisy_train_19k_harder.npy"
+  clean_path: "data/clean_train_19k_harder.npy"
+  test_noisy_path: "data/noisy_val_1k_harder.npy"   # blind test: no clean labels
+  val_split: 0.15                                    # 5% of 19500 = 975 val images
+
+output_dir: "results"
+
+# Config layout:
+# - one block per model family
+# - inside each block you directly edit `model` and `training`
+# - the runner treats each family as one experiment
+#
+# Run all:    python src/main.py
+# Run one:    python src/main.py --run u_net
+#             python src/main.py --run u_net_attention
+#             python src/main.py --run res_net
+
+experiment_groups:
+
+  unet_deep_combined_loss:
+    model:
+      architecture: unet_deep     # 4 encoder stages
+      features: [32, 64, 128, 256]
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: combined
+
+
+  unet_deep_nvidia_loss:
+    model:
+      architecture: unet_deep     # 4 encoder stages
+      features: [32, 64, 128, 256]
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: nvidia
+
+
+  resnet_16blocks_nvidia:
+    model:
+      architecture: resnet
+      base_channels: 64
+      n_blocks: 16
+      dropout: 0.0
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: nvidia
+
+
+  resnet_16blocks_combined:
+    model:
+      architecture: resnet
+      base_channels: 64
+      n_blocks: 16
+      dropout: 0.0
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: combined
+
+
+  u_net_attention_combined:
+    model:
+      architecture: unet_attention
+      features: [64, 128, 256]
+      dropout: 0.0
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: combined
+
+  u_net_attention_nvidia:
+    model:
+      architecture: unet_attention
+      features: [64, 128, 256]
+      dropout: 0.0
+    training:
+      epochs: 60
+      batch_size: 32
+      optimizer: adamw
+      lr: 5.0e-4
+      weight_decay: 1.0e-4
+      scheduler: cosine
+      loss: nvidia
+  
+

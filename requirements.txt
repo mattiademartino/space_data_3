@@ -3,3 +3,5 @@ torch
 matplotlib
 pyyaml
 pytorch_msssim
+transformers
+timm
