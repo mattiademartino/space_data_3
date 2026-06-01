@@ -1,0 +1,11 @@
+Device: cuda
+Train: 18525  Val: 975  Test: 1000
+Parameters (U-Net backbone): 2,047,834
+
+============================================================
+Conditional DDPM — conditional_ddpm
+============================================================
+  T=1000  features=[32, 64, 128]  loss=l1
+  DDIM steps at inference: 50
+  Epochs: 50
+  [conditional_ddpm]   1/50  train 0.05683  val_psnr 22.45 dB
