@@ -1,0 +1,36 @@
+Device: cuda
+Train: 16575  Val: 2925  Test (blind): 1000
+
+============================================================
+Experiment: unet_deep_nvidia_loss
+============================================================
+Parameters: 7,762,465
+  [unet_deep_nvidia_loss]   1/60  train 0.065640  val 0.049477
+  [unet_deep_nvidia_loss]  10/60  train 0.036330  val 0.036988
+  [unet_deep_nvidia_loss]  20/60  train 0.030720  val 0.034362
+  [unet_deep_nvidia_loss]  30/60  train 0.028743  val 0.035115
+  [unet_deep_nvidia_loss]  40/60  train 0.027646  val 0.033366
+  [unet_deep_nvidia_loss]  50/60  train 0.027048  val 0.033231
+  [unet_deep_nvidia_loss]  60/60  train 0.026811  val 0.033145
+  -> Val MSE: 0.002576  PSNR: 25.89 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_deep_nvidia_loss/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: resnet_16blocks_nvidia
+============================================================
+Parameters: 1,185,025
+  [resnet_16blocks_nvidia]   1/60  train 0.094917  val 0.059899
+  [resnet_16blocks_nvidia]  10/60  train 0.040617  val 0.042417
+  [resnet_16blocks_nvidia]  20/60  train 0.038626  val 0.037449
+  [resnet_16blocks_nvidia]  30/60  train 0.037118  val 0.036493
+  [resnet_16blocks_nvidia]  40/60  train 0.036104  val 0.036563
+  [resnet_16blocks_nvidia]  50/60  train 0.035483  val 0.035307
+  [resnet_16blocks_nvidia]  60/60  train 0.035126  val 0.035206
+  -> Val MSE: 0.003193  PSNR: 24.96 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/resnet_16blocks_nvidia/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: resnet_16blocks_combined
+============================================================
+Parameters: 1,185,025
+  [resnet_16blocks_combined]   1/60  train 0.034409  val 0.032733

@@ -1,0 +1,33 @@
+Device: cuda
+Train: 16575  Val: 2925  Test (blind): 1000
+
+============================================================
+Experiment: unet_deep_combined_loss
+============================================================
+Parameters: 7,762,465
+  [unet_deep_combined_loss]   1/60  train 0.034402  val 0.032804
+  [unet_deep_combined_loss]  10/60  train 0.019471  val 0.024217
+  [unet_deep_combined_loss]  20/60  train 0.015612  val 0.018925
+  [unet_deep_combined_loss]  30/60  train 0.013436  val 0.018254
+  [unet_deep_combined_loss]  40/60  train 0.012435  val 0.017955
+  [unet_deep_combined_loss]  50/60  train 0.011548  val 0.018200
+  [unet_deep_combined_loss]  60/60  train 0.011197  val 0.018079
+  -> Val MSE: 0.001969  PSNR: 27.06 dB
+  -> Saved test predictions: /cluster/home/mriestere/space_data_3/results/unet_deep_combined_loss/test_predictions.npy (1000 images)
+
+============================================================
+Experiment: unet_deep_nvidia_loss
+============================================================
+Parameters: 7,762,465
+Traceback (most recent call last):
+  File "/cluster/home/mriestere/space_data_3/src/main.py", line 354, in <module>
+    main()
+  File "/cluster/home/mriestere/space_data_3/src/main.py", line 309, in main
+    history = fit(model, train_loader, val_loader, exp["training"], device, exp_dir, name)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/mriestere/space_data_3/src/trainer.py", line 97, in fit
+    criterion = build_criterion(train_cfg)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/mriestere/space_data_3/src/trainer.py", line 56, in build_criterion
+    raise ValueError(f"Unknown loss: {loss!r}")
+ValueError: Unknown loss: 'nvidia'

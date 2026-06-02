@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=loss_function_ablation
+#SBATCH --job-name=loss_function_ablation2
 #SBATCH -n 10
 #SBATCH --mem-per-cpu=8g
 #SBATCH --gpus=1

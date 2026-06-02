@@ -20,18 +20,18 @@ output_dir: "results"
 
 experiment_groups:
 
-  unet_deep_combined_loss:
-    model:
-      architecture: unet_deep     # 4 encoder stages
-      features: [32, 64, 128, 256]
-    training:
-      epochs: 60
-      batch_size: 32
-      optimizer: adamw
-      lr: 5.0e-4
-      weight_decay: 1.0e-4
-      scheduler: cosine
-      loss: combined
+  # unet_deep_combined_loss:
+  #   model:
+  #     architecture: unet_deep     # 4 encoder stages
+  #     features: [32, 64, 128, 256]
+  #   training:
+  #     epochs: 60
+  #     batch_size: 32
+  #     optimizer: adamw
+  #     lr: 5.0e-4
+  #     weight_decay: 1.0e-4
+  #     scheduler: cosine
+  #     loss: combined
 
 
   unet_deep_nvidia_loss:
@@ -45,7 +45,7 @@ experiment_groups:
       lr: 5.0e-4
       weight_decay: 1.0e-4
       scheduler: cosine
-      loss: nvidia
+      loss: nvidia_loss
 
 
   resnet_16blocks_nvidia:
@@ -61,7 +61,7 @@ experiment_groups:
       lr: 5.0e-4
       weight_decay: 1.0e-4
       scheduler: cosine
-      loss: nvidia
+      loss: nvidia_loss
 
 
   resnet_16blocks_combined:
