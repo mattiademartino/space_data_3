@@ -5,3 +5,4 @@ pyyaml
 pytorch_msssim
 transformers
 timm
+optuna
