@@ -1,0 +1,26 @@
+{
+  "model_id": 1,
+  "name": "unet_deep_01",
+  "arch": "unet_deep",
+  "epochs": 150,
+  "val_split": 0.05,
+  "optuna_psnr": 27.6876,
+  "model_cfg": {
+    "architecture": "unet_deep",
+    "features": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "dropout": 0.10887,
+    "output_fct": "sigmoid"
+  },
+  "train_cfg": {
+    "loss": "mse",
+    "lr": 0.0009664,
+    "weight_decay": 0.002472,
+    "optimizer": "adamw",
+    "batch_size": 16
+  }
+}

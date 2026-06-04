@@ -1,0 +1,41 @@
+Device: cuda
+Train: 18525  Val: 975  Test: 1000
+Parameters (U-Net backbone): 2,047,834
+
+============================================================
+Conditional DDPM — conditional_ddpm
+============================================================
+  T=1000  features=[32, 64, 128]  loss=l1
+  DDIM steps at inference: 50
+  Epochs: 100
+  [conditional_ddpm]   1/100  train 0.05666  val_psnr 17.85 dB
+  [conditional_ddpm]   5/100  train 0.03936  val_psnr 23.41 dB
+  [conditional_ddpm]  10/100  train 0.03649  val_psnr 21.89 dB
+  [conditional_ddpm]  15/100  train 0.03504  val_psnr 24.47 dB
+  [conditional_ddpm]  20/100  train 0.03455  val_psnr 24.53 dB
+  [conditional_ddpm]  25/100  train 0.03366  val_psnr 25.53 dB
+  [conditional_ddpm]  30/100  train 0.03293  val_psnr 24.24 dB
+  [conditional_ddpm]  35/100  train 0.03255  val_psnr 24.65 dB
+  [conditional_ddpm]  40/100  train 0.03163  val_psnr 24.27 dB
+  [conditional_ddpm]  45/100  train 0.03148  val_psnr 24.56 dB
+  [conditional_ddpm]  50/100  train 0.03101  val_psnr 25.69 dB
+  [conditional_ddpm]  55/100  train 0.03036  val_psnr 25.07 dB
+  [conditional_ddpm]  60/100  train 0.03019  val_psnr 25.62 dB
+  [conditional_ddpm]  65/100  train 0.02967  val_psnr 24.74 dB
+  [conditional_ddpm]  70/100  train 0.02923  val_psnr 25.49 dB
+  [conditional_ddpm]  75/100  train 0.02890  val_psnr 25.71 dB
+  [conditional_ddpm]  80/100  train 0.02873  val_psnr 25.55 dB
+  [conditional_ddpm]  85/100  train 0.02838  val_psnr 25.34 dB
+  [conditional_ddpm]  90/100  train 0.02814  val_psnr 25.63 dB
+  [conditional_ddpm]  95/100  train 0.02807  val_psnr 25.69 dB
+  [conditional_ddpm] 100/100  train 0.02808  val_psnr 25.60 dB
+
+Final evaluation (50 DDIM steps) — Val MSE: 0.002709  PSNR: 25.67 dB
+Traceback (most recent call last):
+  File "/cluster/home/mdemartino/space_data_3/src/diffusion_main.py", line 239, in <module>
+    main()
+  File "/cluster/home/mdemartino/space_data_3/src/diffusion_main.py", line 213, in main
+    _save_test_predictions(diffusion, test_ds, device, output_dir,
+  File "/cluster/home/mdemartino/space_data_3/src/diffusion_main.py", line 123, in _save_test_predictions
+    fig.suptitle(f"Blind test predictions — {run_name}")
+NameError: name 'run_name' is not defined

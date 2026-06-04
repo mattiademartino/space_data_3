@@ -1,0 +1,22 @@
+{
+  "model_id": 7,
+  "name": "resnet_01",
+  "arch": "resnet",
+  "epochs": 150,
+  "val_split": 0.05,
+  "optuna_psnr": 25.4966,
+  "model_cfg": {
+    "architecture": "resnet",
+    "base_channels": 32,
+    "n_blocks": 16,
+    "dropout": 0.27032,
+    "output_fct": "sigmoid"
+  },
+  "train_cfg": {
+    "loss": "combined",
+    "lr": 0.0005401,
+    "weight_decay": 5.993e-05,
+    "optimizer": "adam",
+    "batch_size": 16
+  }
+}

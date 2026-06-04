@@ -1,0 +1,25 @@
+{
+  "model_id": 4,
+  "name": "unet_attention_01",
+  "arch": "unet_attention",
+  "epochs": 150,
+  "val_split": 0.05,
+  "optuna_psnr": 26.2096,
+  "model_cfg": {
+    "architecture": "unet_attention",
+    "features": [
+      64,
+      128,
+      256
+    ],
+    "dropout": 0.02709,
+    "output_fct": "sigmoid"
+  },
+  "train_cfg": {
+    "loss": "combined",
+    "lr": 0.002578,
+    "weight_decay": 0.000149,
+    "optimizer": "adamw",
+    "batch_size": 16
+  }
+}

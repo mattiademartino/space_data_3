@@ -182,6 +182,19 @@ def _val_psnr(model, loader, device) -> float:
     return 10.0 * math.log10(1.0 / mse_val) if mse_val > 0 else float("inf")
 
 
+def _val_loss(model, loader, criterion, device) -> float:
+    """Validation loss using the model's own training criterion."""
+    model.eval()
+    total, count = 0.0, 0
+    with torch.no_grad():
+        for noisy_b, clean_b in loader:
+            noisy_b, clean_b = noisy_b.to(device), clean_b.to(device)
+            loss = criterion(model(noisy_b), clean_b)
+            total += loss.item() * noisy_b.size(0)
+            count += noisy_b.size(0)
+    return total / count
+
+
 def _run_train_epoch(model, loader, criterion, optimizer, device) -> float:
     model.train()
     total, count = 0.0, 0
@@ -227,6 +240,7 @@ def make_objective(train_ds, val_ds, arch: str, n_epochs: int, device: torch.dev
 
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=n_epochs)
         best_psnr = -float("inf")
+        best_val_loss = float("inf")
 
         try:
             for epoch in range(1, n_epochs + 1):
@@ -234,7 +248,10 @@ def make_objective(train_ds, val_ds, arch: str, n_epochs: int, device: torch.dev
                 scheduler.step()
 
                 psnr = _val_psnr(model, val_loader, device)
-                best_psnr = max(best_psnr, psnr)
+                vloss = _val_loss(model, val_loader, criterion, device)
+                if psnr > best_psnr:
+                    best_psnr = psnr
+                    best_val_loss = vloss
 
                 trial.report(psnr, epoch)
                 if trial.should_prune():
@@ -246,6 +263,7 @@ def make_objective(train_ds, val_ds, arch: str, n_epochs: int, device: torch.dev
                 raise optuna.exceptions.TrialPruned()
             raise
 
+        trial.set_user_attr("best_val_loss", best_val_loss)
         return best_psnr
 
     return objective
@@ -287,11 +305,13 @@ def make_diffusion_objective(
 
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=n_epochs)
         best_psnr = -float("inf")
+        best_val_loss = float("inf")
 
         try:
             for epoch in range(1, n_epochs + 1):
                 # Training step
                 diffusion.model.train()
+                epoch_loss, n_batches = 0.0, 0
                 for noisy_b, clean_b in train_loader:
                     noisy_b, clean_b = noisy_b.to(device), clean_b.to(device)
                     # training_step(x0, y, criterion): clean=x0, noisy=y
@@ -299,13 +319,17 @@ def make_diffusion_objective(
                     optimizer.zero_grad()
                     loss.backward()
                     optimizer.step()
+                    epoch_loss += loss.item()
+                    n_batches += 1
                 scheduler.step()
 
                 # Validate periodically and on last epoch
                 do_val = (epoch % val_every == 0) or (epoch == n_epochs)
                 if do_val:
-                    _, psnr = ddim_validate(diffusion, val_loader, device, val_ddim_steps)
-                    best_psnr = max(best_psnr, psnr)
+                    val_loss_val, psnr = ddim_validate(diffusion, val_loader, device, val_ddim_steps)
+                    if psnr > best_psnr:
+                        best_psnr = psnr
+                        best_val_loss = val_loss_val
                     trial.report(psnr, epoch)
                     if trial.should_prune():
                         raise optuna.exceptions.TrialPruned()
@@ -316,6 +340,7 @@ def make_diffusion_objective(
                 raise optuna.exceptions.TrialPruned()
             raise
 
+        trial.set_user_attr("best_val_loss", best_val_loss)
         return best_psnr
 
     return objective
@@ -328,25 +353,35 @@ def _save_results(study: optuna.Study, out_dir: Path, arch: str):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     best = study.best_trial
+    best_val_loss = best.user_attrs.get("best_val_loss", None)
     best_info = {
         "trial_number": best.number,
         "psnr_dB":      best.value,
         "params":       best.params,
     }
+    if best_val_loss is not None:
+        best_info["best_val_loss"] = best_val_loss
     with open(out_dir / "best_params.json", "w") as f:
         json.dump(best_info, f, indent=2)
-    print(f"\nBest trial #{best.number}  PSNR = {best.value:.4f} dB")
+    loss_str = f"  val_loss = {best_val_loss:.6f}" if best_val_loss is not None else ""
+    print(f"\nBest trial #{best.number}  PSNR = {best.value:.4f} dB{loss_str}")
     print("  Params:", json.dumps(best.params, indent=4))
 
     completed = [t for t in study.trials if t.state == optuna.trial.TrialState.COMPLETE]
     completed.sort(key=lambda t: -(t.value or -999))
     if completed:
-        fields = ["rank", "trial", "psnr_dB"] + list(completed[0].params.keys())
+        has_loss = any("best_val_loss" in t.user_attrs for t in completed)
+        fields = ["rank", "trial", "psnr_dB"]
+        if has_loss:
+            fields.append("val_loss")
+        fields += list(completed[0].params.keys())
         with open(out_dir / "trials_summary.csv", "w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=fields)
             w.writeheader()
             for rank, t in enumerate(completed, 1):
                 row = {"rank": rank, "trial": t.number, "psnr_dB": round(t.value, 4)}
+                if has_loss:
+                    row["val_loss"] = round(t.user_attrs.get("best_val_loss", float("nan")), 6)
                 row.update(t.params)
                 w.writerow(row)
         print(f"Saved {len(completed)} completed trials → {out_dir / 'trials_summary.csv'}")

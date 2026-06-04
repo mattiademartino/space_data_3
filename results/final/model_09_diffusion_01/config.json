@@ -1,0 +1,24 @@
+{
+  "model_id": 9,
+  "name": "diffusion_01",
+  "arch": "diffusion",
+  "epochs": 150,
+  "val_split": 0.05,
+  "optuna_psnr": 25.5303,
+  "model_cfg": {
+    "features": [
+      64,
+      128,
+      256
+    ],
+    "t_dim": 128,
+    "T": 1000
+  },
+  "train_cfg": {
+    "loss": "mse",
+    "lr": 0.0004248,
+    "weight_decay": 4.583e-05,
+    "optimizer": "adamw",
+    "batch_size": 32
+  }
+}

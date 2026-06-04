@@ -1,0 +1,108 @@
+Many modules are hidden in this stack. Use "module --show_hidden spider SOFTWARE" if you are not able to find the required software
+startup.sh: line 8: venv/bin/activate: No such file or directory
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: numpy in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 1)) (2.2.6)
+Requirement already satisfied: torch in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 2)) (2.12.0)
+Requirement already satisfied: matplotlib in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 3)) (3.10.9)
+Requirement already satisfied: pyyaml in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 4)) (6.0.3)
+Requirement already satisfied: pytorch_msssim in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 5)) (1.0.0)
+Requirement already satisfied: transformers in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 6)) (5.9.0)
+Requirement already satisfied: timm in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 7)) (1.0.27)
+Requirement already satisfied: optuna in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from -r requirements.txt (line 8)) (4.9.0)
+Requirement already satisfied: nvidia-nccl-cu13==2.29.7 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (2.29.7)
+Requirement already satisfied: sympy>=1.13.3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (1.14.0)
+Requirement already satisfied: cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (13.0.2)
+Requirement already satisfied: nvidia-cublas<=13.1.1.3,>=13.1.0.3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (13.1.1.3)
+Requirement already satisfied: jinja2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (3.1.6)
+Requirement already satisfied: typing-extensions>=4.10.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (4.15.0)
+Requirement already satisfied: nvidia-cudnn-cu13==9.20.0.48 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (9.20.0.48)
+Requirement already satisfied: nvidia-nvshmem-cu13==3.4.5 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (3.4.5)
+Requirement already satisfied: triton==3.7.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (3.7.0)
+Requirement already satisfied: filelock in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (3.29.0)
+Requirement already satisfied: nvidia-cusparselt-cu13==0.8.1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (0.8.1)
+Requirement already satisfied: networkx>=2.5.1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (3.4.2)
+Requirement already satisfied: fsspec>=0.8.5 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (2026.4.0)
+Requirement already satisfied: cuda-bindings<14,>=13.0.3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (13.3.1)
+Requirement already satisfied: setuptools<82 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from torch->-r requirements.txt (line 2)) (65.5.0)
+Requirement already satisfied: nvidia-cufft==12.0.0.61.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (12.0.0.61)
+Requirement already satisfied: nvidia-cuda-nvrtc==13.0.88.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (13.0.88)
+Requirement already satisfied: nvidia-cusparse==12.6.3.3.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (12.6.3.3)
+Requirement already satisfied: nvidia-nvjitlink==13.0.88.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (13.0.88)
+Requirement already satisfied: nvidia-curand==10.4.0.35.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (10.4.0.35)
+Requirement already satisfied: nvidia-nvtx==13.0.85.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (13.0.85)
+Requirement already satisfied: nvidia-cusolver==12.0.4.66.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (12.0.4.66)
+Requirement already satisfied: nvidia-cufile==1.15.1.6.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (1.15.1.6)
+Requirement already satisfied: nvidia-cuda-cupti==13.0.85.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (13.0.85)
+Requirement already satisfied: nvidia-cuda-runtime==13.0.96.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-toolkit[cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.2->torch->-r requirements.txt (line 2)) (13.0.96)
+Requirement already satisfied: packaging>=20.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (26.2)
+Requirement already satisfied: contourpy>=1.0.1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (1.3.2)
+Requirement already satisfied: python-dateutil>=2.7 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (2.9.0.post0)
+Requirement already satisfied: kiwisolver>=1.3.1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (1.5.0)
+Requirement already satisfied: cycler>=0.10 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (0.12.1)
+Requirement already satisfied: pillow>=8 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (12.2.0)
+Requirement already satisfied: fonttools>=4.22.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (4.63.0)
+Requirement already satisfied: pyparsing>=3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from matplotlib->-r requirements.txt (line 3)) (3.3.2)
+Requirement already satisfied: huggingface-hub<2.0,>=1.5.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (1.17.0)
+Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (0.22.2)
+Requirement already satisfied: tqdm>=4.27 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (4.67.3)
+Requirement already satisfied: regex>=2025.10.22 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (2026.5.9)
+Requirement already satisfied: safetensors>=0.4.3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (0.7.0)
+Requirement already satisfied: typer in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from transformers->-r requirements.txt (line 6)) (0.25.1)
+Requirement already satisfied: torchvision in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from timm->-r requirements.txt (line 7)) (0.27.0)
+Requirement already satisfied: alembic>=1.5.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from optuna->-r requirements.txt (line 8)) (1.18.4)
+Requirement already satisfied: colorlog in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from optuna->-r requirements.txt (line 8)) (6.10.1)
+Requirement already satisfied: sqlalchemy>=1.4.2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from optuna->-r requirements.txt (line 8)) (2.0.50)
+Requirement already satisfied: Mako in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from alembic>=1.5.0->optuna->-r requirements.txt (line 8)) (1.3.12)
+Requirement already satisfied: tomli in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from alembic>=1.5.0->optuna->-r requirements.txt (line 8)) (2.4.1)
+Requirement already satisfied: cuda-pathfinder>=1.4.2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from cuda-bindings<14,>=13.0.3->torch->-r requirements.txt (line 2)) (1.5.5)
+Requirement already satisfied: httpx<1,>=0.23.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (0.28.1)
+Requirement already satisfied: hf-xet<2.0.0,>=1.4.3 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (1.5.0)
+Requirement already satisfied: click>=8.4.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (8.4.1)
+Requirement already satisfied: six>=1.5 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from python-dateutil>=2.7->matplotlib->-r requirements.txt (line 3)) (1.17.0)
+Requirement already satisfied: greenlet>=1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from sqlalchemy>=1.4.2->optuna->-r requirements.txt (line 8)) (3.5.1)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from sympy>=1.13.3->torch->-r requirements.txt (line 2)) (1.3.0)
+Requirement already satisfied: annotated-doc>=0.0.2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from typer->transformers->-r requirements.txt (line 6)) (0.0.4)
+Requirement already satisfied: rich>=13.8.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from typer->transformers->-r requirements.txt (line 6)) (15.0.0)
+Requirement already satisfied: shellingham>=1.3.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from typer->transformers->-r requirements.txt (line 6)) (1.5.4)
+Requirement already satisfied: MarkupSafe>=2.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from jinja2->torch->-r requirements.txt (line 2)) (3.0.3)
+Requirement already satisfied: idna in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (3.17)
+Requirement already satisfied: httpcore==1.* in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (1.0.9)
+Requirement already satisfied: certifi in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (2026.5.20)
+Requirement already satisfied: anyio in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (4.13.0)
+Requirement already satisfied: h11>=0.16 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (0.16.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from rich>=13.8.0->typer->transformers->-r requirements.txt (line 6)) (2.20.0)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from rich>=13.8.0->typer->transformers->-r requirements.txt (line 6)) (4.2.0)
+Requirement already satisfied: mdurl~=0.1 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer->transformers->-r requirements.txt (line 6)) (0.1.2)
+Requirement already satisfied: exceptiongroup>=1.0.2 in /cluster/home/mdemartino/.local/lib/python3.10/site-packages (from anyio->httpx<1,>=0.23.0->huggingface-hub<2.0,>=1.5.0->transformers->-r requirements.txt (line 6)) (1.3.1)
+
+[notice] A new release of pip is available: 23.0.1 -> 26.1.2
+[notice] To update, run: python3 -m pip install --upgrade pip
+========================================
+Final training — model 3 / 10
+========================================
+
+============================================================
+  Model  3/10 — unet_deep_03
+  Arch       : unet_deep
+  Loss       : mse
+  Epochs     : 150
+  Optuna PSNR: 27.6652 dB
+  Output     : /cluster/home/mdemartino/space_data_3/results/final/model_03_unet_deep_03
+============================================================
+
+Device: cuda
+Train: 18525  Val: 975
+
+  [unet_deep_03]   1/150  train 0.005840  val_mse 0.005441  val_mae 0.058301  PSNR 22.64 dB
+  [unet_deep_03]  10/150  train 0.002761  val_mse 0.004567  val_mae 0.056276  PSNR 23.40 dB
+  [unet_deep_03]  20/150  train 0.002149  val_mse 0.002300  val_mae 0.037774  PSNR 26.38 dB
+  [unet_deep_03]  30/150  train 0.001819  val_mse 0.001808  val_mae 0.032607  PSNR 27.43 dB
+  [unet_deep_03]  40/150  train 0.001580  val_mse 0.002040  val_mae 0.035073  PSNR 26.90 dB
+  [unet_deep_03]  50/150  train 0.001423  val_mse 0.001822  val_mae 0.032835  PSNR 27.39 dB
+  [unet_deep_03]  60/150  train 0.001318  val_mse 0.001956  val_mae 0.033992  PSNR 27.09 dB
+  [unet_deep_03]  70/150  train 0.001204  val_mse 0.001803  val_mae 0.032437  PSNR 27.44 dB
+  [unet_deep_03]  80/150  train 0.001125  val_mse 0.001860  val_mae 0.032988  PSNR 27.30 dB
+  [unet_deep_03]  90/150  train 0.001059  val_mse 0.001804  val_mae 0.032651  PSNR 27.44 dB
+  [unet_deep_03] 100/150  train 0.001013  val_mse 0.001780  val_mae 0.032249  PSNR 27.50 dB
+  [unet_deep_03] 110/150  train 0.000974  val_mse 0.001834  val_mae 0.032774  PSNR 27.37 dB
+[2026-06-04T14:30:42.111+02:00] error: *** JOB 2017161 ON eu-g3-067 CANCELLED AT 2026-06-04T14:30:42 DUE TO TIME LIMIT ***

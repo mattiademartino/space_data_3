@@ -1,0 +1,13 @@
+{
+  "trial_number": 0,
+  "psnr_dB": 25.530349439226452,
+  "params": {
+    "features": "large",
+    "t_dim": 128,
+    "T": 1000,
+    "lr": 0.00042483545280973907,
+    "weight_decay": 4.583013898091509e-05,
+    "optimizer": "adamw",
+    "batch_size": 32
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "model_id": 8,
+  "name": "resnet_02",
+  "arch": "resnet",
+  "epochs": 150,
+  "val_split": 0.05,
+  "optuna_psnr": 25.4527,
+  "model_cfg": {
+    "architecture": "resnet",
+    "base_channels": 64,
+    "n_blocks": 16,
+    "dropout": 0.25537,
+    "output_fct": "tanh"
+  },
+  "train_cfg": {
+    "loss": "combined",
+    "lr": 0.0002021,
+    "weight_decay": 0.002346,
+    "optimizer": "adamw",
+    "batch_size": 32
+  }
+}

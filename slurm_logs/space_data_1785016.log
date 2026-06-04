@@ -1,0 +1,36 @@
+Device: cuda
+Train: 18525  Val: 975  Test: 1000
+Parameters (U-Net backbone): 8,711,197
+
+============================================================
+Conditional DDPM — ddpm_mix
+============================================================
+  T=1000  schedule=cosine  features=[32, 64, 128, 256]  loss=mix
+  DDIM steps at inference: 50
+  Epochs: 100
+  [ddpm_mix]   1/100  train 0.06856  val_psnr 22.51 dB
+  [ddpm_mix]   5/100  train 0.03608  val_psnr 23.26 dB
+  [ddpm_mix]  10/100  train 0.03098  val_psnr 24.00 dB
+  [ddpm_mix]  15/100  train 0.02854  val_psnr 26.30 dB
+  [ddpm_mix]  20/100  train 0.02758  val_psnr 24.24 dB
+  [ddpm_mix]  25/100  train 0.02684  val_psnr 26.63 dB
+  [ddpm_mix]  30/100  train 0.02623  val_psnr 27.01 dB
+  [ddpm_mix]  35/100  train 0.02568  val_psnr 24.42 dB
+  [ddpm_mix]  40/100  train 0.02511  val_psnr 27.70 dB
+  [ddpm_mix]  45/100  train 0.02442  val_psnr 27.63 dB
+  [ddpm_mix]  50/100  train 0.02362  val_psnr 28.27 dB
+  [ddpm_mix]  55/100  train 0.02271  val_psnr 28.24 dB
+  [ddpm_mix]  60/100  train 0.02189  val_psnr 28.33 dB
+  [ddpm_mix]  65/100  train 0.02115  val_psnr 28.30 dB
+  [ddpm_mix]  70/100  train 0.02060  val_psnr 28.26 dB
+  [ddpm_mix]  75/100  train 0.02014  val_psnr 28.25 dB
+  [ddpm_mix]  80/100  train 0.01979  val_psnr 28.25 dB
+  [ddpm_mix]  85/100  train 0.01955  val_psnr 28.22 dB
+  [ddpm_mix]  90/100  train 0.01936  val_psnr 28.21 dB
+  [ddpm_mix]  95/100  train 0.01928  val_psnr 28.20 dB
+  [ddpm_mix] 100/100  train 0.01924  val_psnr 28.20 dB
+
+Final evaluation (50 DDIM steps) — Val MSE: 0.001621  PSNR: 27.90 dB
+  -> Saved test predictions (1000 images): /cluster/home/mdemartino/space_data_3/results/ddpm_mix/test_predictions.npy
+
+All results saved to: /cluster/home/mdemartino/space_data_3/results/ddpm_mix

@@ -1,0 +1,11 @@
+Device: cuda
+Traceback (most recent call last):
+  File "/cluster/home/mdemartino/space_data_3/src/diffusion_main.py", line 239, in <module>
+    main()
+  File "/cluster/home/mdemartino/space_data_3/src/diffusion_main.py", line 150, in main
+    train_ds, val_ds = load_data(data_cfg, ROOT, seed=42)
+  File "/cluster/home/mdemartino/space_data_3/src/dataset.py", line 39, in load_data
+    noisy = np.load(project_root / data_cfg["noisy_path"])
+  File "/cluster/home/mdemartino/.local/lib/python3.10/site-packages/numpy/lib/_npyio_impl.py", line 451, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: '/cluster/home/mdemartino/space_data_3/data/noisy_train_19k_harder.npy'
