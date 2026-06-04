@@ -106,3 +106,12 @@ Train: 18525  Val: 975
   [unet_deep_01] 100/150  train 0.000943  val_mse 0.001802  val_mae 0.032816  PSNR 27.44 dB
   [unet_deep_01] 110/150  train 0.000908  val_mse 0.001774  val_mae 0.032369  PSNR 27.51 dB
   [unet_deep_01] 120/150  train 0.000893  val_mse 0.001769  val_mae 0.032236  PSNR 27.52 dB
+  [unet_deep_01] 130/150  train 0.000881  val_mse 0.001775  val_mae 0.032320  PSNR 27.51 dB
+  [unet_deep_01] 140/150  train 0.000873  val_mse 0.001775  val_mae 0.032330  PSNR 27.51 dB
+  [unet_deep_01] 150/150  train 0.000872  val_mse 0.001766  val_mae 0.032259  PSNR 27.53 dB
+
+  Best val MSE  : 0.001758
+  Best val MAE  : 0.032131
+  Best PSNR     : 27.5505 dB
+  Saved to      : /cluster/home/mdemartino/space_data_3/results/final/model_01_unet_deep_01
+
