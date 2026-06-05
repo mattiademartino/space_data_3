@@ -4,3 +4,19 @@
 [fold 0] epoch  10/150 | train_loss=0.002867 | val_psnr=26.0827 dB | best=26.1861 dB (epoch 7)
 [fold 0] epoch  20/150 | train_loss=0.002259 | val_psnr=26.1966 dB | best=26.9273 dB (epoch 15)
 [fold 0] epoch  30/150 | train_loss=0.001817 | val_psnr=26.4838 dB | best=27.2558 dB (epoch 22)
+[fold 0] epoch  40/150 | train_loss=0.001564 | val_psnr=26.6990 dB | best=27.3558 dB (epoch 32)
+[fold 0] epoch  50/150 | train_loss=0.001361 | val_psnr=27.2125 dB | best=27.3558 dB (epoch 32)
+[fold 0] epoch  60/150 | train_loss=0.001223 | val_psnr=26.3865 dB | best=27.3558 dB (epoch 32)
+[fold 0] epoch  70/150 | train_loss=0.001136 | val_psnr=27.2901 dB | best=27.3558 dB (epoch 32)
+[fold 0] epoch  80/150 | train_loss=0.001053 | val_psnr=27.3230 dB | best=27.3558 dB (epoch 32)
+[fold 0] epoch  90/150 | train_loss=0.001000 | val_psnr=27.2077 dB | best=27.3586 dB (epoch 87)
+[fold 0] epoch 100/150 | train_loss=0.000965 | val_psnr=27.3515 dB | best=27.3586 dB (epoch 87)
+[fold 0] epoch 110/150 | train_loss=0.000934 | val_psnr=27.3189 dB | best=27.3586 dB (epoch 87)
+[fold 0] epoch 120/150 | train_loss=0.000909 | val_psnr=27.2598 dB | best=27.3761 dB (epoch 119)
+[fold 0] epoch 130/150 | train_loss=0.000896 | val_psnr=27.3323 dB | best=27.3761 dB (epoch 119)
+[fold 0] epoch 140/150 | train_loss=0.000888 | val_psnr=27.3651 dB | best=27.3798 dB (epoch 136)
+[fold 0] epoch 150/150 | train_loss=0.000883 | val_psnr=27.3671 dB | best=27.3883 dB (epoch 145)
+
+[fold 0] DONE — best val PSNR = 27.3883 dB at epoch 145
+[fold 0] Model saved to /cluster/home/mriestere/space_data_3/results/kfold_unet_deep_01/fold_0/best_model.pt
+[fold 0] Summary saved to /cluster/home/mriestere/space_data_3/results/kfold_unet_deep_01/fold_0/fold_summary.json

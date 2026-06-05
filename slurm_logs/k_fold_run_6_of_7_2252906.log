@@ -1,0 +1,10 @@
+[fold 6/6] device=cuda  epochs=150  out=/cluster/home/mriestere/space_data_3/results/kfold_unet_deep_01/fold_6
+[fold 6] Full dataset size: 19500
+[fold 6] train=16715  val=2785
+[fold 6] epoch  10/150 | train_loss=0.002818 | val_psnr=25.0298 dB | best=26.0931 dB (epoch 9)
+[fold 6] epoch  20/150 | train_loss=0.002176 | val_psnr=25.2242 dB | best=26.8364 dB (epoch 17)
+[fold 6] epoch  30/150 | train_loss=0.001771 | val_psnr=26.3831 dB | best=27.0308 dB (epoch 28)
+[fold 6] epoch  40/150 | train_loss=0.001486 | val_psnr=26.6368 dB | best=27.0308 dB (epoch 28)
+[fold 6] epoch  50/150 | train_loss=0.001296 | val_psnr=27.0430 dB | best=27.1095 dB (epoch 47)
+[fold 6] epoch  60/150 | train_loss=0.001187 | val_psnr=26.9962 dB | best=27.1095 dB (epoch 47)
+[fold 6] epoch  70/150 | train_loss=0.001090 | val_psnr=27.0708 dB | best=27.1095 dB (epoch 47)
