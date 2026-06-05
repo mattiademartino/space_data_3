@@ -1,0 +1,10 @@
+Submitting models 1-8 (unet_deep, unet_attention, resnet) — 3h each...
+  Job array ID: 2201154
+Submitting models 9-10 (diffusion) — 12h each...
+  Job array ID: 2201161
+
+All 10 jobs submitted. Monitor with:
+  squeue -u $USER
+
+When all jobs finish, generate the summary:
+  python src/train_final.py --summarize

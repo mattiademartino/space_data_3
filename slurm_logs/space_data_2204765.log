@@ -1,0 +1,3 @@
+Device: cuda
+Downloading weights from Hugging Face: mattiademartino/unet-deep-lunar-denoiser
+Predictions saved to predictions.npy  shape=(1000, 128, 128)
