@@ -1,6 +1,8 @@
 """
 submission.py — Space Data Task 3: Lunar Image Denoising
 =========================================================
+Pretrained model: https://huggingface.co/mattiademartino/unet-deep-lunar-denoiser
+
 Best model: unet_deep_01
 Architecture: 4-stage UNet (UNetDeep) with features [64, 128, 256, 512]
 Training: MSE loss, AdamW, cosine-annealing LR schedule, 150 epochs
