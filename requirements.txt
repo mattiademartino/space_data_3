@@ -6,3 +6,4 @@ pytorch_msssim
 transformers
 timm
 optuna
+scikit-learn
