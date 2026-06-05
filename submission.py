@@ -12,7 +12,7 @@ Usage
   # Train from scratch
   python submission.py train --data-dir data/ --out-dir results/submission/
 
-  # Run inference on test set
+  # Run inference on test set with local weights
   python submission.py test --data-dir data/ --weights best_model_mae.pt --out predictions.npy
 
   # Download pretrained weights from Hugging Face and run inference
@@ -60,7 +60,7 @@ class DoubleConv(nn.Module):
 
 
 class UNetDeep(nn.Module):
-    """4-stage U-Net; bottleneck at 4×4 for 64×64 inputs."""
+    """4-stage U-Net; bottleneck at 8x8 for 128x128 inputs."""
 
     def __init__(
         self,
@@ -258,7 +258,10 @@ def train(data_dir: str | Path = "data", out_dir: str | Path = "results/submissi
 def _load_weights(model: UNetDeep, weights_path: str | Path | None,
                   hf_model: str | None, device: torch.device) -> UNetDeep:
     """Load weights either from a local .pt file or from Hugging Face Hub."""
-    if hf_model is not None:
+    if weights_path is not None:
+        print(f"Loading local weights: {weights_path}")
+        state = torch.load(weights_path, map_location=device)
+    elif hf_model is not None:
         try:
             from huggingface_hub import hf_hub_download
         except ImportError:
@@ -266,13 +269,55 @@ def _load_weights(model: UNetDeep, weights_path: str | Path | None,
         print(f"Downloading weights from Hugging Face: {hf_model}")
         local_pt = hf_hub_download(repo_id=hf_model, filename="best_model_mae.pt")
         state = torch.load(local_pt, map_location=device)
-    elif weights_path is not None:
-        state = torch.load(weights_path, map_location=device)
     else:
         sys.exit("Provide either --weights or --hf-model")
 
+    if isinstance(state, dict) and "state_dict" in state:
+        state = state["state_dict"]
+    elif isinstance(state, dict) and "model_state_dict" in state:
+        state = state["model_state_dict"]
     model.load_state_dict(state)
     return model
+
+
+def _save_preview_images(
+    noisy: np.ndarray,
+    predictions: np.ndarray,
+    preview_dir: str | Path,
+    num_preview: int,
+) -> Path | None:
+    """Save a few PNG previews for quick visual inspection."""
+    if num_preview <= 0:
+        return None
+
+    import matplotlib.pyplot as plt
+
+    preview_dir = Path(preview_dir)
+    preview_dir.mkdir(parents=True, exist_ok=True)
+    noisy = _to_float32(noisy)
+    n = min(num_preview, len(predictions))
+
+    for idx in range(n):
+        pred_u8 = (np.clip(predictions[idx], 0.0, 1.0) * 255).astype(np.uint8)
+        plt.imsave(preview_dir / f"prediction_{idx:04d}.png", pred_u8, cmap="gray", vmin=0, vmax=255)
+
+    grid_n = min(n, 8)
+    if grid_n > 0:
+        fig, axes = plt.subplots(2, grid_n, figsize=(2.0 * grid_n, 4.0))
+        if grid_n == 1:
+            axes = np.array([[axes[0]], [axes[1]]])
+        for idx in range(grid_n):
+            axes[0, idx].imshow(noisy[idx], cmap="gray", vmin=0, vmax=1)
+            axes[0, idx].set_title(f"Noisy {idx}")
+            axes[1, idx].imshow(predictions[idx], cmap="gray", vmin=0, vmax=1)
+            axes[1, idx].set_title(f"Pred {idx}")
+        for ax in axes.ravel():
+            ax.axis("off")
+        fig.tight_layout()
+        fig.savefig(preview_dir / "preview_grid.png", dpi=160)
+        plt.close(fig)
+
+    return preview_dir.resolve()
 
 
 def test(
@@ -281,23 +326,32 @@ def test(
     hf_model: str | None = None,
     out_path: str | Path = "predictions.npy",
     batch_size: int = 64,
+    preview_dir: str | Path | None = None,
+    num_preview: int = 16,
 ) -> np.ndarray:
     """
     Run inference on the blind test set.
 
     Parameters
     ----------
-    data_dir      : directory containing noisy_val_1k_harder.npy
-    weights_path  : path to a local .pt checkpoint (ignored if hf_model is set)
+    data_dir      : directory containing noisy_val_500_harder.npy
+    weights_path  : path to a local .pt checkpoint (takes priority over hf_model)
     hf_model      : Hugging Face repo id, e.g. 'demartinomattia/unet-deep-lunar-denoiser'
-    out_path      : where to write the predictions array (N, 64, 64) float32 in [0, 1]
+    out_path      : where to write the predictions array (N, 128, 128) float32 in [0, 1]
     batch_size    : inference batch size
+    preview_dir   : where to write PNG previews
+    num_preview   : number of prediction PNGs to save; set 0 to disable
 
     Returns
     -------
-    numpy array of predictions, shape (N, 64, 64)
+    numpy array of predictions, shape (N, 128, 128)
     """
     data_dir = Path(data_dir)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if preview_dir is None:
+        preview_dir = out_path.with_suffix("").parent / f"{out_path.stem}_preview_images"
+
     device   = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
@@ -305,7 +359,7 @@ def test(
     model = _load_weights(model, weights_path, hf_model, device)
     model.eval()
 
-    noisy_test = np.load(data_dir / "noisy_val_1k_harder.npy")
+    noisy_test = np.load(data_dir / "noisy_val_500_harder.npy")
     test_ds    = LunarTestDataset(noisy_test)
     loader     = DataLoader(test_ds, batch_size=batch_size, shuffle=False, num_workers=4)
 
@@ -315,9 +369,20 @@ def test(
             pred = model(noisy_b.to(device)).cpu().squeeze(1)
             preds.append(pred.numpy())
 
-    predictions = np.concatenate(preds, axis=0)  # (N, 64, 64)
+    predictions = np.concatenate(preds, axis=0)  # (N, 128, 128)
     np.save(out_path, predictions)
-    print(f"Predictions saved to {out_path}  shape={predictions.shape}")
+
+    noisy_float = _to_float32(noisy_test)
+    mean_abs_delta = float(np.mean(np.abs(predictions - noisy_float)))
+    max_abs_delta = float(np.max(np.abs(predictions - noisy_float)))
+    saved_preview_dir = _save_preview_images(noisy_test, predictions, preview_dir, num_preview)
+
+    print(
+        f"Predictions array saved to {out_path.resolve()}  shape={predictions.shape}  "
+        f"mean|pred-noisy|={mean_abs_delta:.6f}  max|pred-noisy|={max_abs_delta:.6f}"
+    )
+    if saved_preview_dir is not None:
+        print(f"Preview images saved to {saved_preview_dir}")
     return predictions
 
 
@@ -375,14 +440,18 @@ def main():
     # --- test ---
     p_test = sub.add_parser("test", help="Run inference on the test set")
     p_test.add_argument("--data-dir",  default="data",
-                        help="Directory with noisy_val_1k_harder.npy (default: data/)")
+                        help="Directory with noisy_val_500_harder.npy (default: data/)")
     p_test.add_argument("--weights",   default=None,
                         help="Path to a local .pt checkpoint (overrides --hf-model)")
-    p_test.add_argument("--hf-model",  default="mattiademartino/unet-deep-lunar-denoiser",
-                        help="Hugging Face repo id (default: mattiademartino/unet-deep-lunar-denoiser)")
+    p_test.add_argument("--hf-model",  default=None,
+                        help="Hugging Face repo id, e.g. mattiademartino/unet-deep-lunar-denoiser")
     p_test.add_argument("--out",       default="predictions.npy",
                         help="Output .npy file path (default: predictions.npy)")
     p_test.add_argument("--batch-size", type=int, default=64)
+    p_test.add_argument("--preview-dir", default=None,
+                        help="Directory for PNG preview images (default: <out>_preview_images)")
+    p_test.add_argument("--num-preview", type=int, default=16,
+                        help="Number of PNG prediction previews to save; use 0 to disable")
 
     # --- upload ---
     p_up = sub.add_parser("upload", help="Upload weights to Hugging Face Hub")
@@ -402,6 +471,8 @@ def main():
             hf_model=args.hf_model,
             out_path=args.out,
             batch_size=args.batch_size,
+            preview_dir=args.preview_dir,
+            num_preview=args.num_preview,
         )
 
     elif args.cmd == "upload":
